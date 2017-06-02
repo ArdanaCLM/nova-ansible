@@ -18,6 +18,9 @@
 ---
 nova_component: nova-api
 
+# flag to enable audit middleware in nova api pipeline
+nova_api_audit_enable: false
+
 # the filters nova-common will copy for this service
 nova_rootwrap_filters:
   - rootwrap.d/api-metadata.filters
