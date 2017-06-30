@@ -26,6 +26,7 @@ nova_required_packages:
   - ebtables
   - dnsmasq
   - qemu-block-rbd
+  - cryptsetup
 
 # packages listed here will trigger a restart of libvirt and the compute service
 # when updated
