@@ -36,6 +36,8 @@ live_migration_flag = VIR_MIGRATE_LIVE,VIR_MIGRATE_PEER2PEER
 live_migration_progress_timeout = 300
 snapshots_directory = {{ libvirt_snapshots_directory }}
 snapshot_image_format = qcow2
+volume_use_multipath = False
+
 #
 # If you have configured ceph backend storage for cinder you
 # must uncomment the below lines under libvirt section to attach
