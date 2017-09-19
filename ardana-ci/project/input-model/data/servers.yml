@@ -20,67 +20,67 @@ product:
 
 baremetal:
   netmask: 255.255.255.0
-  subnet: 192.168.10.0
+  subnet: 192.168.110.0
   server-interface: eth2
 
 servers:
 
   - id: server1
-    ip-addr: 192.168.10.3
+    ip-addr: 192.168.110.3
     role: ARDANA-ROLE
     server-group: RACK1
     mac-addr: a4:93:0c:4f:7c:73
     nic-mapping: VAGRANT
-    ilo-ip: 192.168.9.3
+    ilo-ip: 192.168.109.3
     ilo-password: password
     ilo-user: admin
 
   - id: controller1
-    ip-addr: 192.168.10.4
+    ip-addr: 192.168.110.4
     role: CONTROLLER-ROLE
     server-group: RACK1
     mac-addr: b2:72:8d:ac:7c:6f
     nic-mapping: VAGRANT
-    ilo-ip: 192.168.9.4
+    ilo-ip: 192.168.109.4
     ilo-password: password
     ilo-user: admin
 
   - id: controller2
-    ip-addr: 192.168.10.5
+    ip-addr: 192.168.110.5
     role: CONTROLLER-ROLE
     server-group: RACK2
     mac-addr: 8a:8e:64:55:43:76
     nic-mapping: VAGRANT
-    ilo-ip: 192.168.9.5
+    ilo-ip: 192.168.109.5
     ilo-password: password
     ilo-user: admin
 
   - id: controller3
-    ip-addr: 192.168.10.6
+    ip-addr: 192.168.110.6
     role: CONTROLLER-ROLE
     server-group: RACK3
     mac-addr: 26:67:3e:49:5a:a7
     nic-mapping: VAGRANT
-    ilo-ip: 192.168.9.6
+    ilo-ip: 192.168.109.6
     ilo-password: password
     ilo-user: admin
 
   - id: compute1
-    ip-addr: 192.168.10.7
+    ip-addr: 192.168.110.7
     role: COMPUTE-ROLE
     server-group: RACK1
     mac-addr: d6:70:c1:36:43:f7
     nic-mapping: VAGRANT
-    ilo-ip: 192.168.9.7
+    ilo-ip: 192.168.109.7
     ilo-password: password
     ilo-user: admin
 
   - id: compute2
-    ip-addr: 192.168.10.8
+    ip-addr: 192.168.110.8
     role: COMPUTE-ROLE
     server-group: RACK2
     mac-addr: 8e:8e:62:a6:ce:76
     nic-mapping: VAGRANT
-    ilo-ip: 192.168.9.8
+    ilo-ip: 192.168.109.8
     ilo-password: password
     ilo-user: admin
