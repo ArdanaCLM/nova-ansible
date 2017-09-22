@@ -1,0 +1,77 @@
+#
+# (c) Copyright 2016 Hewlett Packard Enterprise Development LP
+# (c) Copyright 2017 SUSE LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License"); you may
+# not use this file except in compliance with the License. You may obtain
+# a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations
+# under the License.
+#
+---
+- name: ardana-ci | test-plan | Test huge pages - host reboot
+  logfile: nova-testsuite-hugepages.log
+  prefix: hugepages
+  playbooks:
+    - nova-compute-reboot.yml
+    - nova-hugepages-status.yml
+
+- name: ardana-ci | test-plan | Test PCI whitelist configuration
+  logfile: nova-testsuite-pci-whitelist.log
+  prefix: pci-whitelist
+  exec:
+    - copy.bash check-pci-passthrough.yml
+
+- name: ardana-ci | test-plan | Tempest tests
+  logfile: nova-tempest.log
+  prefix: tempest
+  exec:
+    - ansible-playbook -i hosts/verb_hosts nova-status.yml
+  tempest:
+    - "+tempest.api.compute.flavors.test_flavors.FlavorsV2TestJSON.test_get_flavor"
+    - "+tempest.api.compute.flavors.test_flavors.FlavorsV2TestJSON.test_list_flavors"
+    - "+tempest.api.compute.security_groups.test_security_group_rules.SecurityGroupRulesTestJSON.test_security_group_rules_create"
+    - "+tempest.api.compute.security_groups.test_security_group_rules.SecurityGroupRulesTestJSON.test_security_group_rules_list"
+    - "+tempest.api.compute.security_groups.test_security_groups.SecurityGroupsTestJSON.test_security_groups_create_list_delete"
+    - "+tempest.api.compute.servers.test_attach_interfaces.AttachInterfacesTestJSON.test_add_remove_fixed_ip"
+    - "+tempest.api.compute.servers.test_create_server.ServersTestJSON.test_list_servers"
+    - "+tempest.api.compute.servers.test_create_server.ServersTestJSON.test_verify_server_details"
+    - "+tempest.api.compute.servers.test_create_server.ServersTestManualDisk.test_list_servers"
+    - "+tempest.api.compute.servers.test_create_server.ServersTestManualDisk.test_verify_server_details"
+    - "+tempest.api.compute.servers.test_server_actions.ServerActionsTestJSON.test_reboot_server_hard"
+    - "+tempest.api.compute.servers.test_server_addresses.ServerAddressesTestJSON.test_list_server_addresses"
+    - "+tempest.api.compute.servers.test_server_addresses.ServerAddressesTestJSON.test_list_server_addresses_by_network"
+
+- name: ardana-ci | test-plan | Test nova-reconfigure
+  logfile: nova-testsuite-reconfigure.log
+  prefix: reconfigure
+  playbooks:
+    - nova-reconfigure.yml
+
+- name: ardana-ci | test-plan | Test start after reboot
+  logfile: nova-start-after-reboot.log
+  prefix: reboot
+  vms:
+    - reboot: controller2
+  exec:
+    - ansible-playbook -i hosts/verb_hosts nova-start.yml
+    - ansible-playbook -i hosts/verb_hosts nova-status.yml
+
+- name: ardana-ci | test-plan | Test move consoleauth
+  logfile: nova-move-consoleauth.log
+  prefix: move-cau
+  exec:
+    - ansible-playbook -i hosts/verb_hosts nova-start.yml --extra-vars "consoleauth_host_index=1"
+    - ansible-playbook -i hosts/verb_hosts nova-status.yml
+
+- name: ardana-ci | test-plan | Test nova-cloud-configure
+  logfile: nova-cloud-configure.log
+  prefix: cloud-configure
+  playbooks:
+    - nova-cloud-configure.yml

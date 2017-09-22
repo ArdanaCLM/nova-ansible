@@ -1,0 +1,14 @@
+# The order of packages is significant, because pip processes them in the order
+# of appearance. Changing the order has an impact on the overall integration
+# process, which may cause wedges in the gate later.
+
+mock>=1.2
+testrepository>=0.0.18
+testtools>=1.4.0
+monasca-agent>=1.1.11
+python-novaclient>=2.23.3
+python-monascaclient>=1.0.22,<1.1
+oslo.serialization<1.9
+oslo.utils<2.0
+python-keystoneclient==1.6.0
+flake8

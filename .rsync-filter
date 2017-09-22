@@ -1,0 +1,7 @@
+- *requirements.txt
+- HACKING.rst
+- README.md
+- agent.yaml
+- setup.*
+- tests
+- tox.ini

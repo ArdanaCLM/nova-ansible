@@ -1,0 +1,12 @@
+.copyrightignore
+roles/NOV-CMP-KVM/files/etc/libvirt/libvirtd.conf
+roles/NOV-CMP-KVM/files/etc/default/libvirtd
+roles/NOV-CMP-KVM/files/etc/apparmor.d/usr.sbin.libvirtd
+roles/NOV-CMP-KVM/files/etc/apparmor.d/usr.lib.libvirt.virt-aa-helper
+roles/NOV-CMP-KVM/files/etc/apparmor.d/abstractions/nameservice
+roles/NOV-CMP-KVM/files/etc/apparmor.d/abstractions/libvirt-qemu
+roles/NOV-CMP-KVM/files/etc/apparmor.d/abstractions/consoles
+roles/NOV-CMP-KVM/files/etc/apparmor.d/abstractions/base
+tox.ini
+test-requirements.txt
+requirements.txt
