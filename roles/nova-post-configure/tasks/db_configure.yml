@@ -36,6 +36,25 @@
     api_db sync
   run_once_per: verb_hosts.NOV_API
 
+# We need to fix the dates per
+#
+# https://bugzilla.suse.com/show_bug.cgi?id=1056240
+#
+# prior to the migration
+- name: nova-post-configure | db_configure | Copy fix_instance_types.sh script
+  become: yes
+  copy:
+    src: "fix_instance_types.sh"
+    dest: "/tmp/fix_instance_types.sh"
+    mode: 0700
+  run_once_per: verb_hosts.NOV_API
+
+- name: nova-post-configure | db_configure | Fix dates for instance_type
+  become: yes
+  command: >
+    /tmp/fix_instance_types.sh
+  run_once_per: verb_hosts.NOV_API
+
 # This task always reports changes
 - name: nova-post-configure | db_configure | Run nova-manage db online migrate
   become: yes
