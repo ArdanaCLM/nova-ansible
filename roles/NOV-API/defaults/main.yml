@@ -19,7 +19,7 @@
 nova_component: nova-api
 
 # flag to enable audit middleware in nova api pipeline
-nova_api_audit_enable: false
+nova_api_audit_enable: "{{ NOV.audit.enabled }}"
 
 # the filters nova-common will copy for this service
 nova_rootwrap_filters:
