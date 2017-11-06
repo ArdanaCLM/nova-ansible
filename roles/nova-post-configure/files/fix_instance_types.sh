@@ -16,6 +16,8 @@
 # under the License.
 #
 
+PATH=/usr/bin:/bin
+
 set -e
 
 mysql nova -e "update instance_types set created_at=NULL, updated_at=NULL, deleted_at=NULL;"

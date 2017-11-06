@@ -55,6 +55,13 @@
     /tmp/fix_instance_types.sh
   run_once_per: verb_hosts.NOV_API
 
+- name: nova-post-configure | db_configure | Remove fix_instance_types.sh script
+  become: yes
+  file:
+    path: "/tmp/fix_instance_types.sh"
+    state: absent
+  run_once_per: verb_hosts.NOV_API
+
 # This task always reports changes
 - name: nova-post-configure | db_configure | Run nova-manage db online migrate
   become: yes
