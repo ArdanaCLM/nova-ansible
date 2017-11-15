@@ -30,3 +30,6 @@ nova_conductor_workers: "{{ ansible_processor_count * ansible_processor_cores * 
 nova_log_files:
   - "{{ nova_log_file_location }}/nova-conductor.log"
   - "{{ nova_log_file_location }}/nova-conductor-json.log"
+
+# Default max number of open files the Nova Conductor processes can use
+nova_cnd_limit_open_files: 65536
