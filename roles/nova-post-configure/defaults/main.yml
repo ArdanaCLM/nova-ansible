@@ -39,3 +39,5 @@ mysql:
 nova_api:
   internal_url: "{{ NOV_API.advertises.vips.private[0].url }}/v2.1/%(tenant_id)s"
   internal_region: "{{ NOV.regions | first }}"
+
+mysql_cli_host: "{{ groups[verb_hosts.FND_MDB][0] }}"
