@@ -17,3 +17,7 @@
 ---
 dependencies:
   - role: nova-common
+  ##  - role: FND-AP2
+  ## causes "AnsibleUndefinedVariable: One or more undefined variables:
+  ## 'neutron_common_rundir' is undefined", as a workaround added
+  ## FND-AP2 to nova-common meta dependency

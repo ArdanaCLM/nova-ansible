@@ -39,3 +39,10 @@ nova_log_files:
 
 # Default max number of open files the Nova API processes can use
 nova_api_limit_open_files: 65536
+# nova placement api host
+nova_placement_api_bind_host: "{{ host.bind.NOV_PLC.internal.ip_address }}"
+nova_placement_api_bind_port: "{{ host.bind.NOV_PLC.internal.port }}"
+
+# nova global conf
+nova_global_conf_dir: "/etc/nova/"
+

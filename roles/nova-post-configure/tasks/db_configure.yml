@@ -17,16 +17,6 @@
 # Nova Database
 ---
 # This task always reports changed
-- name: nova-post-configure | db_configure | Run nova-manage db sync
-  become: yes
-  command: >
-    {{ nova_api_bin_dir }}/nova-manage
-    --config-file {{ nova_api_conf_dir }}/nova.conf
-    --config-file {{ nova_api_conf_dir }}/api.conf
-    db sync
-  run_once_per: verb_hosts.NOV_API
-
-# This task always reports changed
 - name: nova-post-configure | db_configure | Run nova-manage api db sync
   become: yes
   command: >
@@ -34,6 +24,50 @@
     --config-file {{ nova_api_conf_dir }}/nova.conf
     --config-file {{ nova_api_conf_dir }}/api.conf
     api_db sync
+  run_once_per: verb_hosts.NOV_API
+
+# cells: create and map cell0
+- name: nova-post-configure | db_configure | Create and map cell0
+  become: yes
+  command: >
+    {{ nova_api_bin_dir }}/nova-manage
+    --config-file {{ nova_api_conf_dir }}/nova.conf
+    --config-file {{ nova_api_conf_dir }}/api.conf
+    cell_v2 map_cell0
+  run_once_per: verb_hosts.NOV_API
+
+# cells: create single cell which will contain all compute hosts
+- name: nova-post-configure | db_configure | Create cell1 for compute hosts
+  become: yes
+  command: >
+    {{ nova_api_bin_dir }}/nova-manage
+    --config-file {{ nova_api_conf_dir }}/nova.conf
+    --config-file {{ nova_api_conf_dir }}/api.conf
+    cell_v2 create_cell --name=cell1 --verbose
+  run_once_per: verb_hosts.NOV_API
+  ignore_errors: True
+
+# cells: check if cell0 and cell1 exist
+- name: nova-post-configure | db_configure | Check if cell0 and cell1 exist
+  become: yes
+  command: >
+    {{ nova_api_bin_dir }}/nova-manage
+    --config-file {{ nova_api_conf_dir }}/nova.conf
+    --config-file {{ nova_api_conf_dir }}/api.conf
+    cell_v2 list_cells
+  run_once_per: verb_hosts.NOV_API
+  register: list_cells_result
+  failed_when: ((list_cells_result.stdout.find("cell0") < 0)
+                  or (list_cells_result.stdout.find("cell1") < 0))
+
+# This task always reports changed
+- name: nova-post-configure | db_configure | Run nova-manage db sync
+  become: yes
+  command: >
+    {{ nova_api_bin_dir }}/nova-manage
+    --config-file {{ nova_api_conf_dir }}/nova.conf
+    --config-file {{ nova_api_conf_dir }}/api.conf
+    db sync
   run_once_per: verb_hosts.NOV_API
 
 # We need to fix the dates per

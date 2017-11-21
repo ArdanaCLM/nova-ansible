@@ -85,13 +85,6 @@ firewall_driver = nova.virt.firewall.NoopFirewallDriver
 linuxnet_interface_driver = nova.network.linux_net.LinuxOVSInterfaceDriver
 use_neutron = True
 
-# Oslo messaging
-#  Note:
-#  If the infoblox-ipam-agent is to be deployed in the cloud, change the
-#  notification_driver settting from "messaging" to "messagingv2".
-notification_driver = messaging
-notification_topics = notifications
-
 # Policy
 resize_fs_using_block_device = True
 until_refresh = 1
@@ -109,8 +102,8 @@ ram_allocation_ratio = 1.0
 ram_weight_multiplier = -1.0
 reserved_host_disk_mb = 10240
 reserved_host_memory_mb = 2816
-scheduler_available_filters = nova.scheduler.filters.all_filters
-scheduler_default_filters = AvailabilityZoneFilter,RetryFilter,ComputeFilter,DiskFilter,RamFilter,ImagePropertiesFilter,ServerGroupAffinityFilter,ServerGroupAntiAffinityFilter,ComputeCapabilitiesFilter,NUMATopologyFilter,PciPassthroughFilter,VCPUModelFilter
+available_filters = nova.scheduler.filters.all_filters
+enabled_filters = AvailabilityZoneFilter,RetryFilter,ComputeFilter,DiskFilter,RamFilter,ImagePropertiesFilter,ServerGroupAffinityFilter,ServerGroupAntiAffinityFilter,ComputeCapabilitiesFilter,NUMATopologyFilter,PciPassthroughFilter,SameHostFilter,DifferentHostFilter
 scheduler_host_subset_size = 5
 scheduler_weight_classes = nova.scheduler.weights.ram.RAMWeigher
 
@@ -120,8 +113,18 @@ volume_usage_poll_interval = 3600
 # SRIOV and PCI-PT
 pci_passthrough_whitelist = [{{ pci_passthrough_whitelist }}]
 
+# transport_url
+transport_url = rabbit://{{ rabbit_hosts_transport_url }}/
+
 # End of [DEFAULT] section
 
+[oslo_messaging_notifications]
+# Oslo messaging
+#  Note:
+#  If the infoblox-ipam-agent is to be deployed in the cloud, change the
+#  notification_driver settting from "messaging" to "messagingv2".
+driver = messaging
+topics = notifications
 
 [vnc]
 vncserver_proxyclient_address = {{ vncserver_proxyclient_address }}
@@ -133,6 +136,25 @@ os_region_name = {{ cinder_os_region_name }}
 
 [glance]
 api_servers = {{ glance_api_servers }}
+
+[placement]
+auth_type = password
+auth_url = {{ keystone_auth_uri }}/v3
+auth_uri = {{ keystone_auth_uri }}/v3
+username = {{ nova_placement_api_user }}
+password = {{ nova_placement_api_password }}
+user_domain_name = Default
+project_name = {{ nova_admin_tenant_name }}
+project_domain_name = Default
+os_region_name = {{ keystone_region_name }}
+cafile = {{ ca_certs_file }}
+os_interface = internal
+
+[placement_database]
+connection = {{ nova_api_database_connection }}
+
+[api_database]
+connection = {{ nova_api_database_connection }}
 
 [keystone_authtoken]
 auth_type = v3password

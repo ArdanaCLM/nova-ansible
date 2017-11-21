@@ -62,3 +62,69 @@
     mode: "0755"
     state: directory
   when: nova_api_audit_enable
+
+
+#
+# create modwsgi file for nova-placement-api
+#
+- name: NOV-API | configure | configure nova-placement-api vhost available
+  become: yes
+  template:
+    src: nova-placement-api-apache2.conf.j2
+    dest: /etc/apache2/sites-available/nova-placement-api-apache2.conf
+    mode: 0755
+  register: ardana_notify_nova_placement_api_apache_restart
+
+- name: NOV-API | configure | configure nova-placement-api vhost enabled
+  become: yes
+  file:
+    src: /etc/apache2/sites-available/nova-placement-api-apache2.conf
+    dest: /etc/apache2/sites-enabled/nova-placement-api-apache2.conf
+    state: link
+  register: ardana_notify_nova_placement_api_apache_restart
+
+- name: NOV-API | configure | configure nova-placement-api apache file owner
+  become: yes
+  file:
+    path: "{{ log_dir }}/{{ item }}"
+    owner: "{{ nova_system_user }}"
+    group: "{{ nova_system_group }}"
+    mode: 0640
+    state: touch
+  with_items:
+    - nova_placement_api_wsgi.log
+    - nova_placement_api_wsgi-access.log
+
+- name: NOV-API | configure | set nova-placement-api log file ownership
+  become: yes
+  file:
+    path: "{{ item }}"
+    state: touch
+    owner: "{{ nova_system_user }}"
+    group: "adm"
+    mode: 0640
+  with_items:
+    - "{{ log_dir }}/nova_placement_api_wsgi.log"
+    - "{{ log_dir }}/nova_placement_api_wsgi-access.log"
+    - "{{ log_dir }}/nova-placement-api.log"
+
+- name: NOV-API | configure | Create symbolic link for placement-api startup
+  become: yes
+  file:
+    src: "{{ nova_service_bin_dir }}/nova-placement-api"
+    dest: "/var/www/nova/nova-placement-api"
+    owner: root
+    group: "{{ nova_system_group }}"
+    state: link
+
+- name: NOV-API | configure | Create Symlinks for api nova.conf from install
+  file:
+    src: "{{ nova_service_conf_dir }}/{{ item }}"
+    dest: "{{ nova_global_conf_dir }}/{{ item }}"
+    owner: "{{ nova_system_user }}"
+    group: "{{ nova_system_group }}"
+    state: link
+    mode: 0750
+  with_items:
+    - nova.conf
+  become: yes

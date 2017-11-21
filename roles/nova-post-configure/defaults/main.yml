@@ -41,3 +41,7 @@ nova_api:
   internal_region: "{{ NOV.regions | first }}"
 
 mysql_cli_host: "{{ groups[verb_hosts.FND_MDB][0] }}"
+nova_placement_api:
+  username: "{{ NOV_PLC.consumes_KEY_API.vars.nova_placement_api_user }}"
+  password: "{{ NOV_PLC.consumes_KEY_API.vars.nova_placement_api_password | quote }}"
+

@@ -15,12 +15,15 @@
 # under the License.
 #
 ---
+
 # Create the default flavors. The operations are idempotent.
 - hosts: NOV-API
   roles:
+    - NOV-API
     - nova-post-configure
   # All these tasks should be set to run-once
   tasks:
     - include: roles/nova-post-configure/tasks/create_default_flavors.yml
       ansible_python_interpreter:
         "{{ NOV_CLI.vars.nova_client_python_interpreter }}"
+    - include: roles/nova-post-configure/tasks/discover_hosts_post_deploy.yml

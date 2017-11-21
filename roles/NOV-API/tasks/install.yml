@@ -72,3 +72,28 @@
 # This must happen after the install_package, or a path which is meant to be a
 # symlink will be mkdir'd
 - include: ../../nova-common/tasks/install.yml
+
+#
+# placement api
+#
+- name: NOV-API | install | Create /var/www/nova  directory
+  become: yes
+  file:
+    path: /var/www/nova
+    owner: "{{ nova_system_user }}"
+    group: "{{ nova_system_group }}"
+    mode: 0755
+    state: directory
+    recurse: yes
+
+- name: NOV-API | install | Creating nova global conf directory
+  become: yes
+  file:
+    path: "{{ item.dir }}"
+    state: directory
+    owner: "{{ nova_system_user }}"
+    group: "{{ nova_system_group }}"
+    mode: "{{ item.permission }}"
+    recurse: yes
+  with_items:
+    - { dir: '{{ nova_global_conf_dir }}', permission: '0750'}

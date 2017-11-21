@@ -59,3 +59,30 @@
     role_name: "nova_admin"
     description: "Nova admin role"
   run_once: true
+
+#
+# placement api user
+#
+- name: nova-post-configure | keystone_conf | Create nova-placement-api user
+  keystone_v3:
+    action: "create_user"
+    endpoint: "{{ keystone.endpoint }}"
+    login_token: "{{ domain_scoped_token_result.result }}"
+    user_name: "{{ nova_placement_api.username }}"
+    user_password: "{{ nova_placement_api.password }}"
+    user_domain_name: "Default"
+  run_once: true
+
+- name: nova-post-configure | keystone_conf | Add role nova-placement-api user
+  keystone_v3:
+    action: "grant_project_role"
+    endpoint: "{{ keystone.endpoint }}"
+    login_token: "{{ domain_scoped_token_result.result }}"
+    project_name: "{{ keystone.service_tenant }}"
+    user_name: "{{ nova_placement_api.username }}"
+    role_name: "{{ keystone.role }}"
+    user_domain_name: "Default"
+    project_domain_name: "Default"
+  run_once: true
+
+
