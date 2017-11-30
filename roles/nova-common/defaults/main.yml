@@ -124,10 +124,10 @@ nova_db_ssl: "{% if NOV.consumes_FND_MDB.vips.private[0].use_tls %}?ssl_ca={{ no
 nova_api_db_ssl: "{% if NOV_API.consumes_FND_MDB.vips.private[0].use_tls %}?ssl_ca={{ nova_db_ca_file }}{% endif %}"
 
 ## [database]
-database_connection: "mysql://{{ NOV.consumes_FND_MDB.vars.accounts.nova.username }}:{{ NOV.consumes_FND_MDB.vars.accounts.nova.password | urlencode }}@{{ NOV.consumes_FND_MDB.vips.private[0].host }}/nova{{ nova_db_ssl }}"
+database_connection: "mysql+pymysql://{{ NOV.consumes_FND_MDB.vars.accounts.nova.username }}:{{ NOV.consumes_FND_MDB.vars.accounts.nova.password | urlencode }}@{{ NOV.consumes_FND_MDB.vips.private[0].host }}/nova{{ nova_db_ssl }}"
 
 ## [api_database]
-nova_api_database_connection: "mysql://{{ NOV_API.consumes_FND_MDB.vars.accounts.nova_api.username }}:{{ NOV_API.consumes_FND_MDB.vars.accounts.nova_api.password | urlencode }}@{{ NOV_API.consumes_FND_MDB.vips.private[0].host }}/nova_api{{ nova_api_db_ssl }}"
+nova_api_database_connection: "mysql+pymysql://{{ NOV_API.consumes_FND_MDB.vars.accounts.nova_api.username }}:{{ NOV_API.consumes_FND_MDB.vars.accounts.nova_api.password | urlencode }}@{{ NOV_API.consumes_FND_MDB.vips.private[0].host }}/nova_api{{ nova_api_db_ssl }}"
 
 ## [glance]
 glance_api_servers: "{{ NOV_API.consumes_GLA_API.vips.private[0].url }}"
