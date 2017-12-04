@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # Copyright (c) 2013 Hewlett-Packard Development Company, L.P.
 # Copyright (c) 2017 SUSE LLC
 #
@@ -27,5 +26,5 @@ except ImportError:
     pass
 
 setuptools.setup(
-    setup_requires=['pbr'],
+    setup_requires=['pbr>=2.0.0'],
     pbr=True)
