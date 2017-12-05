@@ -36,7 +36,7 @@ host_username =  {{ vc.username }}
 {% endif %}
 {% endfor %}
 {% endif %}
-host_password = {{ vmware_host_password }}
+host_password = {{ vcenter_encrypted_password | openstack_user_password_decrypt }}
 cluster_name = {{ host.pass_through.vmware.vcenter_cluster }}
 insecure = True
 vmwareapi_nic_attach_retry_count = 60
