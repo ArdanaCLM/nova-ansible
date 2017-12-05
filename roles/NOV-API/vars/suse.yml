@@ -20,6 +20,8 @@
 nova_required_packages:
   - libmysqlclient18
   - libxslt
+  - python-PrettyTable
+  - python-netifaces
 
 # packages listed here will trigger a restart of the service when updated
 nova_api_restart_packages:
