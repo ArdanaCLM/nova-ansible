@@ -26,6 +26,7 @@
     login_project_name: "{{ keystone.service_tenant }}"
     login_project_domain_name: "{{ keystone.service_tenant_domain_name }}"
     region_name: "{{ nova_api.internal_region }}"
+    ca_cert: "{{ ca_certs_file }}"
     name: "{{ item.name }}"
     flavorid: "{{ item.flavorid }}"
     ram: "{{ item.ram }}"

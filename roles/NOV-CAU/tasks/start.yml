@@ -66,6 +66,7 @@
     OS_PROJECT_DOMAIN_NAME: Default
     OS_AUTH_URL: "{{ keystone.url }}/v3"
     OS_ENDPOINT_TYPE: internalURL
+    OS_CACERT: "{{ ca_certs_file }}"
 
 - name: NOV-CAU | start | Ensure nova-consoleauth service started
   become: yes
@@ -103,6 +104,7 @@
     OS_PROJECT_DOMAIN_NAME: Default
     OS_AUTH_URL: "{{ keystone.url }}/v3"
     OS_ENDPOINT_TYPE: internalURL
+    OS_CACERT: "{{ ca_certs_file }}"
 
 # write to deployer fact file where we started service
 - name: NOV-CAU | start | copy consoleauth_host_index to nova.fact on localhost

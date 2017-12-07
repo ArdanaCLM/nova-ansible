@@ -58,6 +58,11 @@ options:
         - The keystone url for authentication
      required: false
      default: 'http://127.0.0.1:35357/v2.0/'
+   ca_cert:
+     description:
+        - CA certificate bundle file path
+     required: false
+     default: None
    region_name:
      description:
         - Name of the region
@@ -148,6 +153,7 @@ def main():
             login_user_domain_name=dict(required=False, default='Default'),
             login_password=dict(required=False, default='password'),
             region_name=dict(required=False, default='RegionOne'),
+            ca_cert=dict(required=False, default=None),
             name=dict(required=True),
             ram=dict(required=True),
             vcpus=dict(required=True),
@@ -173,7 +179,8 @@ def main():
         project_name=module.params['login_project_name'],
         project_domain_name=module.params['login_project_domain_name'],
         password=module.params['login_password'])
-    ks_session = session.Session(auth=ks_auth)
+    ks_session = session.Session(auth=ks_auth,
+                                 verify=module.params['ca_cert'] or True)
 
     client = nova_client.Client('2',
                                 session=ks_session,
