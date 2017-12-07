@@ -62,7 +62,7 @@ nova_metadata_workers: "{{ ansible_processor_count * ansible_processor_cores * 2
 ### API
 api_paste_config: "{{ nova_service_conf_dir }}/api-paste.ini"
 api_audit_config: "{{ nova_service_conf_dir }}/api_audit_map.conf"
-osapi_compute_link_prefix: "{{ NOV_API.advertises.vips.public[0].url }}"
+compute_link_prefix: "{{ NOV_API.advertises.vips.public[0].url }}"
 osapi_compute_listen_port: >
   {{ host | item('bind.NOV_API.internal.port',
                  default=8774) }}
@@ -141,6 +141,9 @@ nova_admin_password: "{{ NOV_API.consumes_KEY_API.vars.keystone_nova_password | 
 nova_admin_tenant_name: "{{ KEY_API.vars.keystone_service_tenant }}"
 nova_admin_user: "{{ NOV_API.consumes_KEY_API.vars.keystone_nova_user }}"
 keystone_region_name: "{{ NOV.regions | first }}"
+memcached_servers: "{% for x in NOV.consumes_FND_MEM.members.private %}{{ x.host }}:{{ x.port }}{%if
+ not loop.last %},{% endif %}{% endfor %}"
+memcache_secret_key: "{{ NOV.consumes_FND_MEM.vars.memcached.nova.secret_key | quote }}"
 
 ## [placement]
 nova_placement_api_user: "{{ NOV_PLC.consumes_KEY_API.vars.nova_placement_api_user }}"

@@ -28,7 +28,6 @@ api_paste_config = {{ api_paste_config }}
 api_rate_limit = False
 enable_new_services = True
 multi_instance_display_name_template = %(name)s-%(count)s
-osapi_compute_link_prefix = {{ osapi_compute_link_prefix }}
 osapi_compute_listen = {{ osapi_compute_listen }}
 # Please change this value (if you need to) in openstack/ardana/ansible/roles/nova-common/defaults/main.yml , do not remove it here
 osapi_compute_workers = {{ nova_api_workers }}
@@ -42,8 +41,6 @@ keys_path = {{ keys_path }}
 
 # common
 my_ip = {{ my_ip }}
-notify_api_faults = True
-notify_on_state_change = vm_and_task_state
 rootwrap_config = {{ rootwrap_config }}
 state_path = {{ state_path }}
 
@@ -75,7 +72,6 @@ metadata_host = {{ metadata_host }}
 metadata_listen = {{ metadata_listen }}
 # Please change this value (if you need to) in openstack/ardana/ansible/roles/nova-common/defaults/main.yml , do not remove it here
 metadata_workers = {{ nova_metadata_workers }}
-use_forwarded_for = {{ metadata_use_forwarded_for }}
 
 # Network
 default_floating_pool = {{ default_floating_pool }}
@@ -87,31 +83,16 @@ use_neutron = True
 
 # Policy
 resize_fs_using_block_device = True
-until_refresh = 1
-
-# Quota
-quota_cores = -1
-quota_injected_files = 5
-quota_injectd_file_content_bytes = 10240
-quota_instances = 40
-quota_metadata_items = 50
-quota_ram = 15360
 
 # Scheduler
 ram_allocation_ratio = 1.0
-ram_weight_multiplier = -1.0
 reserved_host_disk_mb = 10240
 reserved_host_memory_mb = 2816
 available_filters = nova.scheduler.filters.all_filters
 enabled_filters = AvailabilityZoneFilter,RetryFilter,ComputeFilter,DiskFilter,RamFilter,ImagePropertiesFilter,ServerGroupAffinityFilter,ServerGroupAntiAffinityFilter,ComputeCapabilitiesFilter,NUMATopologyFilter,PciPassthroughFilter,SameHostFilter,DifferentHostFilter
-scheduler_host_subset_size = 5
-scheduler_weight_classes = nova.scheduler.weights.ram.RAMWeigher
 
 # Volumes (Cinder)
 volume_usage_poll_interval = 3600
-
-# SRIOV and PCI-PT
-pci_passthrough_whitelist = [{{ pci_passthrough_whitelist }}]
 
 # transport_url
 transport_url = rabbit://{{ rabbit_hosts_transport_url }}/
@@ -153,6 +134,11 @@ os_interface = internal
 [placement_database]
 connection = {{ nova_api_database_connection }}
 
+[api]
+auth_strategy = keystone
+use_forwarded_for = {{ metadata_use_forwarded_for }}
+compute_link_prefix = {{ compute_link_prefix }}
+
 [api_database]
 connection = {{ nova_api_database_connection }}
 
@@ -167,6 +153,13 @@ username = {{ nova_admin_user }}
 password = {{ nova_admin_password }}
 region_name = {{ keystone_region_name }}
 cafile = {{ ca_certs_file }}
+service_token_roles_required = true
+service_token_roles = admin
+memcached_servers = {{ memcached_servers }}
+memcache_security_strategy = ENCRYPT
+memcache_secret_key = {{ memcache_secret_key }}
+memcache_pool_socket_timeout = 1
+
 
 [neutron]
 auth_type = v2password
@@ -182,6 +175,10 @@ url = {{ neutron_url }}
 timeout = 300
 region_name = {{ neutron_region_name }}
 
+[notifications]
+notify_api_faults = True
+notify_on_state_change = vm_and_task_state
+
 [osapi_v3]
 enabled = True
 
@@ -189,12 +186,27 @@ enabled = True
 lock_path = {{ lock_path }}
 
 [oslo_messaging_rabbit]
-rabbit_hosts = {{ rabbit_hosts }}
-rabbit_password = {{ rabbit_password }}
-rabbit_userid = {{ rabbit_userid }}
 rabbit_use_ssl = {{ rabbit_use_ssl }}
 rpc_conn_pool_size = 10
 kombu_reconnect_delay = 5.0
+
+[pci]
+# SRIOV and PCI-PT
+passthrough_whitelist = [{{ pci_passthrough_whitelist }}]
+
+[quota]
+quota_cores = -1
+quota_injected_files = 5
+quota_injectd_file_content_bytes = 10240
+quota_instances = 40
+quota_metadata_items = 50
+quota_ram = 15360
+until_refresh = 1
+
+[filter_scheduler]
+ram_weight_multiplier = -1.0
+host_subset_size = 5
+weight_classes = nova.scheduler.weights.ram.RAMWeigher
 
 [ssl]
 ca_file = {{ ca_certs_file }}
