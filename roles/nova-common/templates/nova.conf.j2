@@ -24,20 +24,12 @@
 [DEFAULT]
 
 # API
-api_paste_config = {{ api_paste_config }}
 api_rate_limit = False
 enable_new_services = True
 multi_instance_display_name_template = %(name)s-%(count)s
 osapi_compute_listen = {{ osapi_compute_listen }}
 # Please change this value (if you need to) in openstack/ardana/ansible/roles/nova-common/defaults/main.yml , do not remove it here
 osapi_compute_workers = {{ nova_api_workers }}
-wsgi_default_pool_size = 100
-
-# Authentication
-auth_strategy = keystone
-
-# CA & SSL
-keys_path = {{ keys_path }}
 
 # common
 my_ip = {{ my_ip }}
@@ -72,14 +64,6 @@ metadata_host = {{ metadata_host }}
 metadata_listen = {{ metadata_listen }}
 # Please change this value (if you need to) in openstack/ardana/ansible/roles/nova-common/defaults/main.yml , do not remove it here
 metadata_workers = {{ nova_metadata_workers }}
-
-# Network
-default_floating_pool = {{ default_floating_pool }}
-dhcpbridge = {{ dhcpbridge }}
-dhcpbridge_flagfile = {{ dhcpbridge_flagfile }}
-firewall_driver = nova.virt.firewall.NoopFirewallDriver
-linuxnet_interface_driver = nova.network.linux_net.LinuxOVSInterfaceDriver
-use_neutron = True
 
 # Policy
 resize_fs_using_block_device = True
@@ -117,6 +101,7 @@ os_region_name = {{ cinder_os_region_name }}
 
 [glance]
 api_servers = {{ glance_api_servers }}
+cafile = {{ ca_certs_file }}
 
 [placement]
 auth_type = password
@@ -141,6 +126,10 @@ compute_link_prefix = {{ compute_link_prefix }}
 
 [api_database]
 connection = {{ nova_api_database_connection }}
+
+[crypto]
+# CA & SSL
+keys_path = {{ keys_path }}
 
 [keystone_authtoken]
 auth_type = v3password
@@ -174,6 +163,7 @@ service_metadata_proxy = True
 url = {{ neutron_url }}
 timeout = 300
 region_name = {{ neutron_region_name }}
+default_floating_pool = {{ default_floating_pool }}
 
 [notifications]
 notify_api_faults = True
@@ -186,7 +176,7 @@ enabled = True
 lock_path = {{ lock_path }}
 
 [oslo_messaging_rabbit]
-rabbit_use_ssl = {{ rabbit_use_ssl }}
+ssl = {{ rabbit_use_ssl }}
 rpc_conn_pool_size = 10
 kombu_reconnect_delay = 5.0
 
@@ -208,9 +198,6 @@ ram_weight_multiplier = -1.0
 host_subset_size = 5
 weight_classes = nova.scheduler.weights.ram.RAMWeigher
 
-[ssl]
-ca_file = {{ ca_certs_file }}
-
 {% if nova_api_audit_enable|bool %}
 [audit_middleware_notifications]
 driver = log
@@ -226,6 +213,10 @@ barbican_endpoint = {{ barbican_endpoint_template }}
 barbican_api_version = v1
 auth_endpoint = {{ barbican_keystone_auth_url }}
 {% endif %}
+
+[wsgi]
+api_paste_config = {{ api_paste_config }}
+default_pool_size = 100
 
 ### End of File  ###
 ## Do NOT put anything after this line ##

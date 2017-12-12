@@ -96,8 +96,6 @@ metadata_use_forwarded_for: >
     True{% else %}False{% endif %}
 
 ### Network
-dhcpbridge: "{{ nova_service_bin_dir }}/nova-dhcpbridge"
-dhcpbridge_flagfile: "{{ nova_service_conf_dir }}/nova.conf"
 default_floating_pool: "{{ config_data | item('NEU.neutron_external_networks', default=[{'name': 'ext-net'}]) | map(attribute='name') | first }}"
 
 ### RabbitMQ
