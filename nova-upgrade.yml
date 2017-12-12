@@ -52,4 +52,11 @@
   tasks:
     - include: roles/nova-post-configure/tasks/db_contract.yml
 
+# Discover hosts
+- hosts: NOV-API
+  roles:
+    - nova-post-configure
+  tasks:
+  - include: roles/nova-post-configure/tasks/discover_hosts_post_deploy.yml
+
 - include: nova-status.yml

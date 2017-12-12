@@ -17,6 +17,8 @@
 # tasks against the nova database that will add new columns, tables
 # and/or remove redundant data prior to upgrade
 ---
-# For now we call configure from here. We may do more in the future.
+- name: nova-post-configure | db_expand | Prepare cell0 and cell1 during upgrade
+  include: db_cells.yml
+
 - name: nova-post-configure | db_expand | DB Expand
   include: db_configure.yml
