@@ -36,11 +36,6 @@ esx_compute_driver: "{%- if esx_compute_driver_list|length > 0 -%}
                          {{ esx_default_driver }}
                      {%- endif -%}"
 
-# keystone related conf to get vcenter password from EON
-eon_admin_tenant_name : "{{ KEY_API.vars.keystone_service_tenant }}"
-eon_admin_password : "{{ EON_API.consumes_KEY_API.vars.keystone_eon_password | quote }}"
-eon_admin_user : "{{ EON_API.consumes_KEY_API.vars.keystone_eon_user }}"
-eon_os_region_name: "{{ NOV.regions | first }}"
 neutron_ovs_bridge:
   "{%- set ovs_br_list = NOV_ESX | provided_data('ovs_bridge') -%}
    {%- if ovs_br_list | length > 0 -%}
