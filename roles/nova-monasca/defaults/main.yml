@@ -20,8 +20,8 @@ nova_component: nova-monasca
 
 # At the moment we specify the same upper and lower bounds, but we want to keep
 # two separate values just in case we need to define a broader range in the future
-process_count_lower_bound: "{{ osapi_compute_workers|int + metadata_workers|int + 1 }}"
-process_count_upper_bound: "{{ osapi_compute_workers|int + metadata_workers|int + 1 }}"
+process_count_lower_bound: "{{ nova_api_workers|int + nova_metadata_workers|int + 1 }}"
+process_count_upper_bound: "{{ nova_api_workers|int + nova_metadata_workers|int + 1 }}"
 
 # Keystone
 keystone_auth_url: >

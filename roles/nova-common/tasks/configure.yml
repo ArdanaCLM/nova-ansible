@@ -16,6 +16,20 @@
 #
 # nova-common | configure
 ---
+- name: nova-common | configure |
+    Set max api worker count if dynamic
+    CPU based count is greater than {{ nova_api_max_workers }}
+  set_fact:
+    nova_api_workers: "{{ nova_api_max_workers }}"
+  when:  nova_api_workers|int > nova_api_max_workers|int
+
+- name: nova-common | configure |
+    Set max metadata worker count if dynamic
+    CPU based count is greater than {{ nova_metadata_max_workers }}
+  set_fact:
+    nova_metadata_workers: "{{ nova_api_max_workers }}"
+  when: nova_metadata_workers|int > nova_api_max_workers|int
+
 - name: nova-common | configure | debug message for nova_component
   debug:
       msg: "Running nova-common configure for {{ nova_component }}"

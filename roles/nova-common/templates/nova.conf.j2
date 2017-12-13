@@ -31,7 +31,7 @@ multi_instance_display_name_template = %(name)s-%(count)s
 osapi_compute_link_prefix = {{ osapi_compute_link_prefix }}
 osapi_compute_listen = {{ osapi_compute_listen }}
 # Please change this value (if you need to) in openstack/ardana/ansible/roles/nova-common/defaults/main.yml , do not remove it here
-osapi_compute_workers = {{ osapi_compute_workers }}
+osapi_compute_workers = {{ nova_api_workers }}
 wsgi_default_pool_size = 100
 
 # Authentication
@@ -74,7 +74,7 @@ log_dir = {{ log_dir }}
 metadata_host = {{ metadata_host }}
 metadata_listen = {{ metadata_listen }}
 # Please change this value (if you need to) in openstack/ardana/ansible/roles/nova-common/defaults/main.yml , do not remove it here
-metadata_workers = {{ metadata_workers }}
+metadata_workers = {{ nova_metadata_workers }}
 use_forwarded_for = {{ metadata_use_forwarded_for }}
 
 # Network

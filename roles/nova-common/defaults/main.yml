@@ -45,6 +45,18 @@ nova_keys_file_location: "{{ nova_state_root_dir }}/var/lib/nova/keys"
 nova_kernel_module_file: "{{ nova_component }}"
 nova_facts_dir: "/etc/ansible/facts.d"
 
+# Number of maximum workers allowed regardless of CPUs available
+nova_api_max_workers: 20
+
+# Number of maximum workers allowed regardless of CPUs available
+nova_metadata_max_workers: 10
+
+# Number of workers for OpenStack API service. The default will be the
+# maximum allowed by variable nova_api_max_workers
+nova_api_workers: "{{ ansible_processor_count * ansible_processor_cores * 2 | default('{{ nova_api_max_workers }} ') }}"
+# Number of workers for metadata service.
+nova_metadata_workers: "{{ ansible_processor_count * ansible_processor_cores * 2 | default('{{ nova_metadata_max_workers }} ') }}"
+
 # nova.conf
 ## [DEFAULT]
 ### API
@@ -57,7 +69,6 @@ osapi_compute_listen_port: >
 osapi_compute_listen: >
   {{ host | item('bind.NOV_API.internal.ip_address',
                  default=host.vars.my_hostname_address) }}
-osapi_compute_workers: 20
 
 ### CA & SSL
 keys_path: "{{ nova_state_root_dir }}/var/lib/nova/keys"
@@ -80,7 +91,6 @@ nova_internal_endpoint: NOV_API.advertises.vips.private[0].url
 ### Metadata
 metadata_host: "{% if host.bind.NOV_MTD is defined %}{{ host.bind.NOV_MTD.internal.ip_address }}{% else %}{{ NOV_API.advertises.vips.private[0].host }}{% endif %}"
 metadata_listen: "{% if host.bind.NOV_MTD is defined %}{{ host.bind.NOV_MTD.internal.ip_address }}{% else %}{{ NOV_API.advertises.vips.private[0].host }}{% endif %}"
-metadata_workers: 10
 metadata_use_forwarded_for: >
   {% if true in (NOV_API | provided_data('use_forwarded_for')) %}
     True{% else %}False{% endif %}
