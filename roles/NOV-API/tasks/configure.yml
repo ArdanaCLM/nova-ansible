@@ -128,3 +128,23 @@
   with_items:
     - nova.conf
   become: yes
+
+- name: NOV-API | configure | Create symbolic link for nova-manage script
+  become: yes
+  file:
+    src: "{{ nova_service_bin_dir }}/nova-manage"
+    dest: /usr/local/bin/nova-manage
+    owner: root
+    group: "{{ nova_system_group }}"
+    state: link
+    force: yes
+
+- name: NOV-API | configure | Create symbolic link for nova-status script
+  become: yes
+  file:
+    src: "{{ nova_service_bin_dir }}/nova-status"
+    dest: /usr/local/bin/nova-status
+    owner: root
+    group: "{{ nova_system_group }}"
+    state: link
+    force: yes
