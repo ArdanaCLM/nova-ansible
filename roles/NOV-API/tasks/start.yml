@@ -87,7 +87,8 @@
 - name: NOV-API | start | Enable nova-placement-api site
   become: yes
   command: a2ensite nova-placement-api-apache2
-  when: not nova_placement_api_site_file_result.stat.exists
+  when: ( not nova_placement_api_site_file_result.stat.exists and
+          ansible_os_family == 'Debian' )
 
 - include: "{{ playbook_dir }}/roles/FND-AP2/tasks/start_reload.yml"
   vars:

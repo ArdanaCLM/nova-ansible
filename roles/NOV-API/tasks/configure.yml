@@ -71,17 +71,18 @@
   become: yes
   template:
     src: nova-placement-api-apache2.conf.j2
-    dest: /etc/apache2/sites-available/nova-placement-api-apache2.conf
+    dest: "{{ apache2_vhost_dir }}/nova-placement-api-apache2.conf"
     mode: 0755
   register: ardana_notify_nova_placement_api_apache_restart
 
 - name: NOV-API | configure | configure nova-placement-api vhost enabled
   become: yes
   file:
-    src: /etc/apache2/sites-available/nova-placement-api-apache2.conf
+    src: "{{ apache2_vhost_dir }}/nova-placement-api-apache2.conf"
     dest: /etc/apache2/sites-enabled/nova-placement-api-apache2.conf
     state: link
   register: ardana_notify_nova_placement_api_apache_restart
+  when: ansible_os_family == 'Debian'
 
 - name: NOV-API | configure | configure nova-placement-api apache file owner
   become: yes
