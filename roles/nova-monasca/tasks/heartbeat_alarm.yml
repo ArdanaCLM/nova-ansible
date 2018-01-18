@@ -41,6 +41,9 @@
     keystone_user: "{{ nova_monasca_user }}"
     keystone_password: "{{ nova_monasca_password }}"
     keystone_project: "{{ keystone_monitoring_tenant }}"
+    keystone_project_domain: "{{ nova_monasca_default_domain }}"
+    keystone_user_domain: "{{ nova_monasca_default_domain }}"
+    keystone_verify: "{{ system_cacert_file }}"
     monasca_api_url: "{{ monasca_alarm_definition_api_url }}"
     ok_actions:
       - "{{ nova_monasca_notification_method_result.notification_method_id }}"
