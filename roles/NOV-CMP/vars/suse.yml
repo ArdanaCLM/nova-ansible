@@ -35,7 +35,7 @@ nova_compute_log_handlers: file, logstash
 nova_compute_log_formatters: context, logstash
 
 nova_compute_log_handler_file_class: handlers.WatchedFileHandler
-nova_compute_log_handler_file_args: "'{{ nova_log_file_location
+nova_compute_log_handler_file_args: "'{{ log_dir
     }}/nova-compute.log',"
-nova_compute_log_handler_logstash_args: "'{{ nova_log_file_location
+nova_compute_log_handler_logstash_args: "'{{ log_dir
     }}/nova-compute-json.log',"

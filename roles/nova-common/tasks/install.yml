@@ -50,9 +50,8 @@
     mode: "{{ item.mode | default('a-rwx,u+rwx,g+rx,o+rx') }}"
     state: directory
   with_items:
-    - file: "{{ nova_lock_file_location }}"
-    - file: "{{ nova_keys_file_location }}"
-    - file: "{{ nova_log_file_location }}"
+    - file: "{{ keys_path }}"
+    - file: "{{ log_dir }}"
       group: "{{ nova_system_group }}"
       mode: "0755"
 

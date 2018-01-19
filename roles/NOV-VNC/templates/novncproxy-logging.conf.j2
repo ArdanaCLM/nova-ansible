@@ -36,14 +36,14 @@ level: NOTSET
 [handler_watchedfile]
 class: handlers.WatchedFileHandler
 # TODO Use templated log path
-args: ('{{ nova_log_file_location }}/nova-novncproxy.log',)
+args: ('{{ log_dir }}/nova-novncproxy.log',)
 formatter: context
 
 # Writes JSON to disk, beaver will ship to logstash
 [handler_logstash]
 class: handlers.WatchedFileHandler
 # TODO Use templated log path
-args: ('{{ nova_log_file_location }}/nova-novncproxy-json.log',)
+args: ('{{ log_dir }}/nova-novncproxy-json.log',)
 formatter: logstash
 level: INFO
 

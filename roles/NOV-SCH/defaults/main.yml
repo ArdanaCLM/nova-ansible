@@ -20,8 +20,8 @@ nova_component: nova-scheduler
 
 # the log files nova-common will create for this service
 nova_log_files:
-  - "{{ nova_log_file_location }}/nova-scheduler.log"
-  - "{{ nova_log_file_location }}/nova-scheduler-json.log"
+  - "{{ log_dir }}/nova-scheduler.log"
+  - "{{ log_dir }}/nova-scheduler-json.log"
 
 # policy files needed for ironic_host_manager
 nova_policy_file: ../../nova-common/templates/policy.json.j2

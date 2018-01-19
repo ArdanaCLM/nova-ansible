@@ -45,5 +45,5 @@ ca_certs_file: /etc/ssl/certs/ca-certificates.crt
 
 # the log files nova-common will create for this service
 nova_log_files:
-  - "{{ nova_log_file_location }}/nova-consoleauth.log"
-  - "{{ nova_log_file_location }}/nova-consoleauth-json.log"
+  - "{{ log_dir }}/nova-consoleauth.log"
+  - "{{ log_dir }}/nova-consoleauth-json.log"

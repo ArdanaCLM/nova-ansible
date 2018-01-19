@@ -39,9 +39,6 @@ enable_migrate_file: "{{ nova_facts_dir }}/nova_migrate_enabled.fact"
 # install (the version is required in the path).
 nova_state_root_dir: /
 nova_system_home_folder: "{{ nova_state_root_dir }}/var/lib/nova"
-nova_lock_file_location: "{{ nova_state_root_dir }}/var/lib/nova"
-nova_log_file_location: "{{ nova_state_root_dir }}/var/log/nova"
-nova_keys_file_location: "{{ nova_state_root_dir }}/var/lib/nova/keys"
 nova_kernel_module_file: "{{ nova_component }}"
 nova_facts_dir: "/etc/ansible/facts.d"
 

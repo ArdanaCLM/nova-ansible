@@ -40,13 +40,13 @@ level: WARNING
 # Writes to disk
 [handler_watchedfile]
 class: handlers.WatchedFileHandler
-args: ('{{ nova_log_file_location  }}/nova-consoleauth.log',)
+args: ('{{ log_dir  }}/nova-consoleauth.log',)
 formatter: context
 
 # Writes JSON to disk, beaver will ship to logstash
 [handler_logstash]
 class: handlers.WatchedFileHandler
-args: ('{{ nova_log_file_location  }}/nova-consoleauth-json.log',)
+args: ('{{ log_dir  }}/nova-consoleauth-json.log',)
 formatter: logstash
 level: INFO
 

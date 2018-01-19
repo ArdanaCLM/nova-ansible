@@ -44,5 +44,5 @@ vncserver_proxyclient_address: "{{ host.bind.NOV_CMP.vncdisplay.ip_address }}"
 
 # the log files nova-common will create for this service
 nova_log_files:
-  - "{{ nova_log_file_location }}/nova-compute.log"
-  - "{{ nova_log_file_location }}/nova-compute-json.log"
+  - "{{ log_dir }}/nova-compute.log"
+  - "{{ log_dir }}/nova-compute-json.log"
