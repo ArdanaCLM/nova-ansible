@@ -1,0 +1,33 @@
+
+module local 1.0;
+
+require {
+	type nova_var_lib_t;
+	type svirt_t;
+	type var_log_t;
+	type logrotate_t;
+	type var_lib_t;
+	type virtlogd_t;
+	class process { transition };
+	class capability { dac_override dac_read_search };
+	class file { open append create getattr write };
+	class dir search;
+}
+
+
+#============= logrotate_t ==============
+
+#!!!! This avc is allowed in the current policy
+allow logrotate_t var_lib_t:file { create write };
+
+
+#============= virtlogd_t ==============
+
+#!!!! This avc is allowed in the current policy
+allow virtlogd_t nova_var_lib_t:dir search;
+allow virtlogd_t nova_var_lib_t:file open;
+allow virtlogd_t nova_var_lib_t:file append;
+allow virtlogd_t nova_var_lib_t:file getattr;
+
+#!!!! This avc is allowed in the current policy
+allow virtlogd_t self:capability { dac_override dac_read_search };
