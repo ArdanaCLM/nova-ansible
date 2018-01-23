@@ -34,8 +34,8 @@ nova_api_bin_dir: "{{ nova_component | bin_dir() }}"
 
 # the log files nova-common will create for this service
 nova_log_files:
-  - "{{ nova_log_file_location }}/nova-api.log"
-  - "{{ nova_log_file_location }}/nova-api-json.log"
+  - "{{ log_dir }}/nova-api.log"
+  - "{{ log_dir }}/nova-api-json.log"
 
 # Default max number of open files the Nova API processes can use
 nova_api_limit_open_files: 65536

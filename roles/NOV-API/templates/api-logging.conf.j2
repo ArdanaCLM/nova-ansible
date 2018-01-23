@@ -51,13 +51,13 @@ level: INFO
 # Writes to disk
 [handler_watchedfile]
 class: handlers.WatchedFileHandler
-args: ('{{ nova_log_file_location }}/nova-api.log',)
+args: ('{{ log_dir }}/nova-api.log',)
 formatter: context
 
 # Writes JSON to disk, beaver will ship to logstash
 [handler_logstash]
 class: handlers.WatchedFileHandler
-args: ('{{ nova_log_file_location }}/nova-api-json.log',)
+args: ('{{ log_dir }}/nova-api-json.log',)
 formatter: logstash
 level: INFO
 {%- if nova_api_audit_enable|bool %}
