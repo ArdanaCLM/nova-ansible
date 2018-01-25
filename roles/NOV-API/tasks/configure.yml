@@ -72,7 +72,7 @@
   template:
     src: nova-placement-api-apache2.conf.j2
     dest: "{{ apache2_vhost_dir }}/nova-placement-api-apache2.conf"
-    mode: 0755
+    mode: 0644
   register: ardana_notify_nova_placement_api_apache_restart
 
 - name: NOV-API | configure | configure nova-placement-api vhost enabled
