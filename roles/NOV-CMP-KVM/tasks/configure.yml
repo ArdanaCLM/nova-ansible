@@ -1,6 +1,6 @@
 #
 # (c) Copyright 2015-2016 Hewlett Packard Enterprise Development LP
-# (c) Copyright 2017 SUSE LLC
+# (c) Copyright 2017-2018 SUSE LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may
 # not use this file except in compliance with the License. You may obtain
@@ -207,3 +207,58 @@
   notify:
     - restart libvirtd
   when: write_conf_result.changed
+
+- name: NOV-CMP-KVM | configure | Copy temp directory for selinux updates
+  become: yes
+  shell: "mktemp -d"
+  register: _rhel_selinux_policy_temp_loc_result
+  when: (ansible_os_family | lower == 'redhat') and
+        (nova_rhel_compute_apply_selinux_policy_updates | bool)
+
+- name: NOV-CMP-KVM | configure | Copy selinux policy te updates
+  become: yes
+  copy:
+    src: "{{ item.file }}"
+    dest: "{{ _rhel_selinux_policy_temp_loc_result.stdout }}/{{ item.file }}"
+    owner: root
+    group: root
+    mode: "{{ item.mode | default('a-rwx,u=rw,g=r,a=r') }}"
+  with_items:
+    - file: 'local.te'
+  when: (ansible_os_family | lower == 'redhat') and
+        (nova_rhel_compute_apply_selinux_policy_updates | bool)
+
+- name: NOV-CMP-KVM | configure | Restore SELinux context for qemu-kvm,
+        libvirt lib and nova lib paths
+  become: yes
+  shell: |
+    set -eu
+    restorecon -R -v /usr/libexec/qemu-kvm
+    restorecon -R -v /var/lib/libvirt/
+    restorecon -R -v /var/lib/nova
+  register: _rhel_selinux_restore_context_result
+  until: _rhel_selinux_restore_context_result|success
+  when: (ansible_os_family | lower == 'redhat') and
+        (nova_rhel_compute_apply_selinux_policy_updates | bool)
+
+- name: NOV-CMP-KVM | configure | Apply updated selinux policy
+        lib and nova lib paths
+  become: yes
+  shell: |
+    set -eu
+    make -f /usr/share/selinux/devel/Makefile local.pp
+    semodule -i local.pp
+  args:
+    chdir: "{{ _rhel_selinux_policy_temp_loc_result.stdout }}"
+  register: _rhel_sepolicy_update_result
+  until: _rhel_sepolicy_update_result|success
+  when: (ansible_os_family | lower == 'redhat') and
+        (nova_rhel_compute_apply_selinux_policy_updates | bool)
+
+- name: NOV-CMP-KVM | configure | Remove temp directory with selinux updates
+  become: yes
+  file:
+    path: "{{ _rhel_selinux_policy_temp_loc_result.stdout }}"
+    state: absent
+  when: (ansible_os_family | lower == 'redhat') and
+        (nova_rhel_compute_apply_selinux_policy_updates | bool)

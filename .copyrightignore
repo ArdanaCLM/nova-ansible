@@ -7,6 +7,7 @@ roles/NOV-CMP-KVM/files/etc/apparmor.d/abstractions/nameservice
 roles/NOV-CMP-KVM/files/etc/apparmor.d/abstractions/libvirt-qemu
 roles/NOV-CMP-KVM/files/etc/apparmor.d/abstractions/consoles
 roles/NOV-CMP-KVM/files/etc/apparmor.d/abstractions/base
+roles/NOV-CMP-KVM/files/local.te
 tox.ini
 test-requirements.txt
 requirements.txt
