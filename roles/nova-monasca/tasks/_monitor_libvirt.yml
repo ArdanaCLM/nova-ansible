@@ -1,6 +1,6 @@
 #
 # (c) Copyright 2015-2016 Hewlett Packard Enterprise Development LP
-# (c) Copyright 2017 SUSE LLC
+# (c) Copyright 2017-2018 SUSE LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may
 # not use this file except in compliance with the License. You may obtain
@@ -17,6 +17,13 @@
 ---
 - name: nova-monasca | _monitor_libvirt | include required variables
   include_vars: libvirt-monitoring.yml
+
+- name: nova-monasca | _monitor_libvirt | Install Nova Client rpm
+  become: yes
+  package:
+    name: python-novaclient
+    state: present
+  when: deployer_media_legacy_layout|bool == False
 
 - name: nova-monasca | _monitor_libvirt |
     Run Monasca agent libvirt detection plugin
