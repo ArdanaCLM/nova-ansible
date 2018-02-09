@@ -62,19 +62,14 @@
 #
 # placement api
 #
-- name: NOV-API | start | Check if nova placement api site is enabled
+#
+- name: NOV-API | start | Enable nova-placement-api vhost enabled
   become: yes
-  stat:
-    path: /etc/apache2/sites-enabled/nova-placement-api-apache2.conf
-  register: nova_placement_api_site_file_result
-
-
-# Set the fact for reload based on whether we are enabled
-- name: NOV-API | start | Set fact placement api to start on ardana_notify_fact
-  set_fact:
-    nova_placement_api_reload_required : True
-  when: >-
-          not nova_placement_api_site_file_result.stat.exists
+  file:
+    src: "{{ apache2_vhost_dir }}/nova-placement-api-apache2.vhost"
+    dest: "{{ apache2_vhost_dir }}/nova-placement-api-apache2.conf"
+    state: link
+  register: ardana_notify_nova_placement_api_apache_restart
 
 # Set the fact for restart based on ardana_notify
 - name: NOV-API | start | Set fact placement api to start on ardana_notify_fact
@@ -84,13 +79,7 @@
           ardana_notify_nova_placement_api_apache_restart is defined
           and ardana_notify_nova_placement_api_apache_restart.changed
 
-- name: NOV-API | start | Enable nova-placement-api site
-  become: yes
-  command: a2ensite nova-placement-api-apache2
-  when: ( not nova_placement_api_site_file_result.stat.exists and
-          ansible_os_family == 'Debian' )
-
 - include: "{{ playbook_dir }}/roles/FND-AP2/tasks/start_reload.yml"
   vars:
-    apache_reload_requested: "{{ nova_placement_api_reload_required }}"
+    apache_reload_requested: "{{ nova_placement_api_restart_required }}"
     apache_restart_requested: "{{ nova_placement_api_restart_required }}"
