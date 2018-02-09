@@ -1,6 +1,6 @@
 #
 # (c) Copyright 2017 Hewlett Packard Enterprise Development LP
-# (c) Copyright 2017 SUSE LLC
+# (c) Copyright 2017-2018 SUSE LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may
 # not use this file except in compliance with the License. You may obtain
@@ -19,14 +19,17 @@
 ---
 # packages listed here will be installed by nova-common | install
 nova_required_packages:
-  - kvm
-  - libvirt
+  - cryptsetup
+  - dnsmasq
+  - ebtables
   - genisoimage
   - kpartx
-  - ebtables
-  - dnsmasq
+  - kvm
+  - libvirt
+  - python-PrettyTable
+  - python-netifaces
   - qemu-block-rbd
-  - cryptsetup
+  - rsync
 
 # packages listed here will trigger a restart of libvirt and the compute service
 # when updated
