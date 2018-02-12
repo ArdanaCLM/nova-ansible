@@ -25,7 +25,7 @@
     src: "NOV_MON/{{ item }}"
     dest: "/usr/lib/monasca/agent/custom_checks.d/{{ item }}"
     owner: "root"
-    group: "mon-agent"
+    group: "{{ monasca_agent_group_name }}"
     mode: 0750
   with_items:
     - "nova_heartbeat_check.py"
