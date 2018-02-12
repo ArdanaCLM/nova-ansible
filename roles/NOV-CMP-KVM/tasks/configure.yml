@@ -29,8 +29,6 @@
 - include: ../../nova-common/tasks/_write_conf.yml
   src: "../../NOV-CMP-KVM/templates/hypervisor.conf.j2"
   dest: "{{ nova_service_conf_dir }}/hypervisor.conf"
-  owner: "{{ nova_system_user }}"
-  group: "{{ nova_system_group }}"
 
 - name: NOV-CMP-KVM | configure | notify on hypervisor.conf change
   command: /bin/true
@@ -199,8 +197,7 @@
   become: yes
   src: "../../NOV-CMP-KVM/templates/qemu.conf.j2"
   dest: "/etc/libvirt/qemu.conf"
-  owner: "{{ libvirt_qemu_user }}"
-  group: "{{ libvirt_qemu_user }}"
+  conf_group: "{{ libvirt_qemu_user }}"
 
 - name: NOV-CMP-KVM | configure | notify on qemu.conf change
   command: /bin/true

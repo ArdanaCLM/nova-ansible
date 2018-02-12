@@ -31,8 +31,6 @@
 - include: ../../nova-common/tasks/_write_conf.yml
   src: "../../NOV-API/templates/api.conf.j2"
   dest: "{{ nova_service_conf_dir }}/api.conf"
-  owner: "{{ nova_system_user }}"
-  group: "{{ nova_system_group }}"
 
 - name: NOV-API | configure | notify on api.conf change
   command: /bin/true
