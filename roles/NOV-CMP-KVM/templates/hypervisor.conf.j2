@@ -1,7 +1,7 @@
 {#
 #
 # (c) Copyright 2015-2016 Hewlett Packard Enterprise Development LP
-# (c) Copyright 2017 SUSE LLC
+# (c) Copyright 2017-2018 SUSE LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may
 # not use this file except in compliance with the License. You may obtain
@@ -37,16 +37,14 @@ live_migration_progress_timeout = 300
 snapshots_directory = {{ libvirt_snapshots_directory }}
 snapshot_image_format = qcow2
 volume_use_multipath = False
-
-#
-# If you have configured ceph backend storage for cinder you
-# must uncomment the below lines under libvirt section to attach
-# rbd volumes to kvm instances and replace all strings in angle
-# brackets with the correct values for the ceph you have configured.
-#
-#rbd_user = <ceph-user>
-#rbd_secret_uuid = <secret-uuid>
-#
+# SES Integration
+{% if nova_ses_enabled|bool %}
+images_type = rbd
+images_rbd_pool = {{ nova_ses_pool_name }}
+images_rbd_ceph_conf = {{ nova_ses_ceph_conf_file_path }}
+rbd_user = {{ nova_ses_user_name }}
+rbd_secret_uuid = {{ nova_ses_secret_uuid }}
+{% endif %}
 
 # VNC
 [vnc]

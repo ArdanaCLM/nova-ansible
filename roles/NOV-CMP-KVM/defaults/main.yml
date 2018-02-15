@@ -42,3 +42,11 @@ neutron_ovs_bridge:
 # Flag to indicate whether on RHEL computes, selinux policy updates need to be
 # applied or not?
 nova_rhel_compute_apply_selinux_policy_updates: false
+
+# SES Integration
+nova_ses_enabled: "{{ 'True' if ses_nova_user_name is defined else 'False' }}" 
+nova_ses_user_name: "{{ ses_nova_user_name | default('') }}"
+nova_ses_pool_name: "{{ ses_nova_pool_name | default('') }}"
+nova_ses_secret_uuid: "{{ ses_nova_secret_uuid | default('') }}"
+nova_ses_ceph_conf_file_path: "{{ ses_conf_file_path | default('') }}"
+
