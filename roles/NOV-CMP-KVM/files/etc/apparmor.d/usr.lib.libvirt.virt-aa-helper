@@ -29,7 +29,7 @@
   # See Debian BZ#725144
   /etc/libnl-3/classid r,
 
-  # hLinux BZ#134 -- partial fix
+  # partial fix
   # for cinder/iscsi volumes
   audit /dev/sd[a-z]* r,
 
