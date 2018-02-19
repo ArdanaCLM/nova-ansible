@@ -52,3 +52,4 @@
     alarm_actions:
       - "{{ nova_monasca_notification_method_result.notification_method_id }}"
   run_once: true
+  no_log: True

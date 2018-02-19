@@ -33,3 +33,4 @@
     overwrite: false
   register: nova_monasca_notification_method_result
   run_once: true
+  no_log: True

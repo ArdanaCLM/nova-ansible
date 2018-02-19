@@ -46,6 +46,7 @@
     undetermined_actions:
       - "{{ nova_monasca_notification_method_result.notification_method_id }}"
   run_once: True
+  no_log: True
   register: monasca_vcenter_alarms_result
   until: not monasca_vcenter_alarms_result | failed
   with_items:
