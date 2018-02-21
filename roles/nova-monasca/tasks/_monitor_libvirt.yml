@@ -31,6 +31,11 @@
   monasca_agent_plugin:
     name: "libvirt"
     args:
+      username: "{{ nova_admin_user }}"
+      password: "{{ nova_admin_password }}"
+      project_name: "{{ keystone_service_tenant }}"
+      auth_url: "{{ keystone_auth_url_unversioned }}"
+      endpoint_type: "admin"
       disk_collection_period: "{{ monasca_libvirt_disk_collection_period }}"
       region_name: "{{ nova_api_region }}"
       vm_cpu_check_enable: "{{ vm_cpu_check_enable }}"

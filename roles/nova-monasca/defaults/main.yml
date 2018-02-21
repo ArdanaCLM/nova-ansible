@@ -26,6 +26,7 @@ process_count_upper_bound: "{{ nova_api_workers|int + nova_metadata_workers|int 
 # Keystone
 keystone_auth_url: >
     {{ KEY_API.advertises.vips.private[0].url ~ '/v3' }}
+keystone_auth_url_unversioned: "{{ KEY_API.advertises.vips.private[0].url }}"
 nova_admin_user: "{{ NOV_API.consumes_KEY_API.vars.keystone_nova_user }}"
 nova_admin_password: "{{ NOV_API.consumes_KEY_API.vars.keystone_nova_password | quote }}"
 nova_api_region: "{{ NOV.regions | first }}"
