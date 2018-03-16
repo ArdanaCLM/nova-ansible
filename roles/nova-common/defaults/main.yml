@@ -153,10 +153,11 @@ barbican_keystone_auth_url: "{{ NOV_API.consumes_KEY_API.vips.private[0].url }}/
 libvirt_snapshots_directory: "{{ nova_state_root_dir }}/var/lib/nova/tmp"
 
 ## [neutron]
-neutron_admin_auth_url: "{{ NOV_API.consumes_KEY_API.vips.private[0].url }}/v2.0"
-neutron_admin_tenant_name: "{{ KEY_API.vars.keystone_service_tenant }}"
+neutron_admin_auth_url: "{{ NOV_API.consumes_KEY_API.vips.private[0].url }}/v3"
+neutron_admin_project_name: "{{ KEY_API.vars.keystone_service_tenant }}"
 neutron_admin_password: "{{ NEU_SVR.consumes_KEY_API.vars.keystone_neutron_password | quote }}"
 neutron_admin_username: "{{ NEU_SVR.consumes_KEY_API.vars.keystone_neutron_user }}"
+neutron_domain_name: "{{ KEY_API.vars.keystone_default_domain }}"
 neutron_url: "{{ NOV_API.consumes_NEU_SVR.vips.private[0].url }}"
 neutron_metadata_proxy_shared_secret: >
     {%- if NOV_MTD.vars.metadata_proxy_shared_secret is defined -%}

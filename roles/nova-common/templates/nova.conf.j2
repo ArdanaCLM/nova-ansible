@@ -151,11 +151,13 @@ memcache_pool_socket_timeout = 1
 
 
 [neutron]
-auth_type = v2password
+auth_type = v3password
 auth_url = {{ neutron_admin_auth_url }}
 password = {{ neutron_admin_password }}
-tenant_name = {{ neutron_admin_tenant_name }}
+project_name = {{ neutron_admin_project_name }}
 username = {{ neutron_admin_username }}
+project_domain_name = {{ neutron_domain_name }}
+user_domain_name = {{ neutron_domain_name }}
 metadata_proxy_shared_secret = {{ neutron_metadata_proxy_shared_secret }}
 neutron_auth_strategy = keystone
 cafile = {{ ca_certs_file }}
