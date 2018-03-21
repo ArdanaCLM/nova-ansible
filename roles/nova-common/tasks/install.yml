@@ -89,33 +89,13 @@
     mode: 0755
     state: directory
 
-- name: nova-common | install | Install required packages in Debian derivatives
+- name: nova-common | install | Install required packages for Nova
   become: yes
-  apt:
+  package:
     name: "{{ item }}"
-    install_recommends: no
-    state: latest
+    state: present
   with_items:
     nova_required_packages | default([])
-  when: ansible_os_family == 'Debian'
-
-- name: nova-common | install | Install required packages in RedHat derivatives
-  become: yes
-  yum:
-    name: "{{ item }}"
-    state: latest
-  with_items:
-    nova_required_packages | default([])
-  when: ansible_os_family == 'RedHat'
-
-- name: nova-common | install | Install required packages in Suse derivatives
-  become: yes
-  zypper:
-    name: "{{ item }}"
-    state: latest
-  with_items:
-    nova_required_packages | default([])
-  when: ansible_os_family == 'Suse'
 
 - name: nova-common | install | Add kernel modules
   become: yes
