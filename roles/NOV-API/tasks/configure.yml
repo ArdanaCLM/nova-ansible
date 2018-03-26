@@ -102,7 +102,7 @@
   become: yes
   file:
     src: "{{ nova_service_bin_dir }}/nova-placement-api"
-    dest: "/var/www/nova/nova-placement-api"
+    dest: "{{ www_root }}/nova/nova-placement-api"
     owner: root
     group: "{{ nova_system_group }}"
     state: link
