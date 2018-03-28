@@ -76,8 +76,9 @@
   set_fact:
     nova_placement_api_restart_required : True
   when: >-
-          ardana_notify_nova_placement_api_apache_restart is defined
-          and ardana_notify_nova_placement_api_apache_restart.changed
+          ardana_notify_nova_restart_required.changed or
+          (ardana_notify_nova_placement_api_apache_restart is defined
+          and ardana_notify_nova_placement_api_apache_restart.changed)
 
 - include: "{{ playbook_dir }}/roles/FND-AP2/tasks/start_reload.yml"
   vars:
