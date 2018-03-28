@@ -33,7 +33,7 @@ nova_api_region: "{{ NOV.regions | first }}"
 nova_monasca_user: "{{ NOV_API.consumes_KEY_API.vars.nova_monasca_user }}"
 nova_monasca_password: "{{ NOV_API.consumes_KEY_API.vars.nova_monasca_password | quote }}"
 nova_monasca_default_domain: "Default"
-system_cacert_file: "/etc/ssl/certs/ca-certificates.crt"
+system_cacert_file: "{{ trusted_ca_bundle }}"
 keystone_service_tenant: "{{ KEY_API.vars.keystone_service_tenant }}"
 # KEYSTONE-824 You'd think this'd be KEY_API.vars.keystone_monitoring_tenant but nope
 keystone_monitoring_tenant: "{{ KEY_API.vars.keystone_admin_tenant }}"

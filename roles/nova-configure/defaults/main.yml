@@ -29,4 +29,4 @@ monasca:
   # Likewise, KEY_API.vars.keystone_monitoring_role
   role: "monasca-user"
   default_domain_name: "Default"
-system_cacert_file: "/etc/ssl/certs/ca-certificates.crt"
+system_cacert_file: "{{ trusted_ca_bundle }}"

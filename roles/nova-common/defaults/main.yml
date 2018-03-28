@@ -116,7 +116,7 @@ vncserver_listen: "{{ host.bind.NOV_VNC.public.ip_address }}"
 vncserver_proxyclient_address: "{{ NOV_VNC.advertises.vips.public[0].host }}"
 
 ## [database ssl]
-nova_db_ca_file: "/etc/ssl/certs/ca-certificates.crt"
+nova_db_ca_file: "{{ trusted_ca_bundle }}"
 nova_db_ssl: "{% if NOV.consumes_FND_MDB.vips.private[0].use_tls %}?ssl_ca={{ nova_db_ca_file }}{% endif %}"
 nova_api_db_ssl: "{% if NOV_API.consumes_FND_MDB.vips.private[0].use_tls %}?ssl_ca={{ nova_db_ca_file }}{% endif %}"
 

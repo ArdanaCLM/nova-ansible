@@ -41,7 +41,7 @@ keystone:
   service_tenant: "{{ KEY_API.vars.keystone_service_tenant }}"
   url: "{{ NOV_API.consumes_KEY_API.vips.private[0].url }}"
 
-ca_certs_file: /etc/ssl/certs/ca-certificates.crt
+ca_certs_file: "{{ trusted_ca_bundle }}"
 
 # the log files nova-common will create for this service
 nova_log_files:
