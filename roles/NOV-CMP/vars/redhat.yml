@@ -37,3 +37,5 @@ nova_compute_log_handler_file_args: "'{{ log_dir
     }}/nova-compute.log',"
 nova_compute_log_handler_logstash_args: "'{{ log_dir
     }}/nova-compute-json.log',"
+
+libvirtd_service: "libvirtd.service"
