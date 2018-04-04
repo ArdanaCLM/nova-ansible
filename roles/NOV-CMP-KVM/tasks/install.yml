@@ -58,6 +58,7 @@
     owner: root
     group: kvm
     mode: 0660
+  when: ansible_os_family | lower == 'redhat'
 
 - name: NOV-CMP-KVM | install | For RHEL, set group ACL for /dev/kvm
   become: yes
