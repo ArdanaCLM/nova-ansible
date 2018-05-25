@@ -259,3 +259,7 @@
     state: absent
   when: (ansible_os_family | lower == 'redhat') and
         (nova_rhel_compute_apply_selinux_policy_updates | bool)
+
+# For SES/Ceph integration
+- include: ./create-compute-secret-key.yml
+  when: nova_ses_enabled|bool

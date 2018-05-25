@@ -49,4 +49,5 @@ nova_ses_user_name: "{{ ses_nova_user_name | default('') }}"
 nova_ses_pool_name: "{{ ses_nova_pool_name | default('') }}"
 nova_ses_secret_uuid: "{{ ses_nova_secret_uuid | default('') }}"
 nova_ses_ceph_conf_file_path: "{{ ses_conf_file_path | default('') }}"
+nova_ses_cinder_keyring_file_path: "{{ ses_cinder_keyring_file_path | default('') }}"
 
