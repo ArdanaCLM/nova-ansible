@@ -73,7 +73,7 @@
   #/var/lib/dbus/machine-id r,
 
   # Allow access to hugepages
-  /dev/hugepages_*/** rw,
+  /tmp/hugepages_*/** rw,
 
   # access to firmware's etc
   /usr/share/kvm/** r,

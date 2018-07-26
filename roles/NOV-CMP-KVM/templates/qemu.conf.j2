@@ -1,3 +1,22 @@
+{#
+#
+# (c) Copyright 2015-2016 Hewlett Packard Enterprise Development LP
+# (c) Copyright 2017-2018 SUSE LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License"); you may
+# not use this file except in compliance with the License. You may obtain
+# a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations
+# under the License.
+#
+#}
+
 # Master configuration file for the QEMU driver.
 # All settings described here are optional - if omitted, sensible
 # defaults are used.
@@ -346,7 +365,7 @@ cgroup_device_acl = [
 # be specified at once, separated by comma and enclosed in square
 # brackets, for example:
 #
-#     hugetlbfs_mount = ["/dev/hugepages2M", "/dev/hugepages1G"]
+#     hugetlbfs_mount = ["/tmp/hugepages2M", "/tmp/hugepages1G"]
 #
 # The size of huge page served by specific mount point is determined by
 # libvirt at the daemon startup.
@@ -357,7 +376,7 @@ cgroup_device_acl = [
 {% if huge_page_sizes is defined and huge_page_sizes|length > 0 %}
 hugetlbfs_mount = [
   {% for size in huge_page_sizes %}
-    "/dev/hugepages_{{ size }}"{% if not loop.last %},{% endif %}
+    "/tmp/hugepages_{{ size }}"{% if not loop.last %},{% endif %}
   {% endfor %}
 ]
 {% endif %}

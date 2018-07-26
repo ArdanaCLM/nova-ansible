@@ -169,6 +169,22 @@
     state: directory
   when: sym_result.stat.islnk is defined and sym_result.stat.islnk == False
 
+- name: NOV-CMP-KVM | configure |
+        Set ownership of hugepage directories to qemu user
+  become: yes
+  file:
+    path: /tmp/hugepages_{{ item.size }}
+    state: directory
+    owner: "{{ libvirt_qemu_user }}"
+    group: "root"
+    mode: "{{ huge_page_dirs_mode }"
+  with_items:
+    total_huge_pages
+  when:
+    total_huge_pages | length > 0
+  tags:
+    - skip_ansible_lint
+
 #(TODO)From 4.0 version we can remove the copy of saved instances images
 - name: NOV-CMP-KVM | configure | Copy saved instances images to new location
   become: yes
