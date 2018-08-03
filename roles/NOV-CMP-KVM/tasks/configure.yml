@@ -177,7 +177,6 @@
     state: directory
     owner: "{{ libvirt_qemu_user }}"
     group: "root"
-    mode: "{{ huge_page_dirs_mode }"
   with_items:
     total_huge_pages
   when:

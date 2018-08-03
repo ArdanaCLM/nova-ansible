@@ -33,7 +33,6 @@ nova_cgroup_device_acl:
   - /dev/hpet
   - /dev/vfio/vfio
 huge_page_sizes: "{{ non_numa_huge_pages | union(numa_huge_pages) | map(attribute='size') | unique | list }}"
-huge_page_dirs_mode: +t,ug=rwx,o-rwx
 neutron_ovs_bridge:
   "{%- set ovs_br_list = NOV_KVM | provided_data('ovs_bridge') -%}
    {%- if ovs_br_list | length > 0 -%}
