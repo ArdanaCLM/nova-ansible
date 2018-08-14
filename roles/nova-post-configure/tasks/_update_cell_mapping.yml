@@ -1,0 +1,45 @@
+#
+# (c) Copyright 2018 SUSE LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License"); you may
+# not use this file except in compliance with the License. You may obtain
+# a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations
+# under the License.
+#
+---
+- name: nova-post-configure | _update_cell_mapping | Query for cell mapping UUID
+  become: yes
+  shell: >
+    {{ nova_api_bin_dir }}/nova-manage
+    cell_v2 list_cells 2>/dev/null |
+    grep "^|  *{{ cell_mapping_name }} " | awk '{ print $4 }'
+  register: _cell_mapping_uuid_result
+  run_once_per: verb_hosts.NOV_API
+
+- name: nova-post-configure | _update_cell_mapping | Create/update cell mapping
+  become: yes
+  command: >
+    {{ nova_api_bin_dir }}/nova-manage
+    --config-file {{ nova_api_conf_dir }}/nova.conf
+    --config-file {{ nova_api_conf_dir }}/api.conf
+    {%- if _cell_mapping_uuid_result.stdout == '' %}
+    {%-   if cell_mapping_name == 'cell0' %}
+            cell_v2 map_cell0
+    {%-   else %}
+            cell_v2 create_cell --name={{ cell_mapping_name }} --verbose
+    {%-   endif %}
+    {%- else %}
+        cell_v2 update_cell --cell_uuid {{ _cell_mapping_uuid_result.stdout }}
+    {%- endif %}
+  run_once_per: verb_hosts.NOV_API
+
+- name: nova-post-configure | _update_cell_mapping | Restart nova-api service
+  command: /bin/true
+  register: ardana_notify_nova_api_restart_required
