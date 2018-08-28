@@ -32,6 +32,7 @@ nova_required_packages:
   - qemu-block-rbd
   - qemu-ovmf-x86_64
   - rsync
+  - libsodium23
 
 # packages listed here will trigger a restart of libvirt and the compute service
 # when updated
