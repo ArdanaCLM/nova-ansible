@@ -26,6 +26,7 @@ nova_required_packages:
   - kpartx
   - kvm
   - libvirt
+  - libvirt-python
   - python-PrettyTable
   - python-netifaces
   - qemu-block-rbd
@@ -36,6 +37,7 @@ nova_required_packages:
 nova_libvirt_restart_packages:
   - kvm
   - libvirt
+  - libvirt-python
   - kpartx
   - ebtables
   - dnsmasq
