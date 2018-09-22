@@ -79,7 +79,7 @@ enabled_filters = AvailabilityZoneFilter,RetryFilter,ComputeFilter,DiskFilter,Ra
 volume_usage_poll_interval = 3600
 
 # transport_url
-transport_url = rabbit://{{ rabbit_hosts_transport_url }}/
+transport_url = {{ rabbit_hosts_transport_url }}
 
 # End of [DEFAULT] section
 

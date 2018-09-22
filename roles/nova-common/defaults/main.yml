@@ -101,9 +101,12 @@ rabbit_password: "{{ NOV.consumes_FND_RMQ.vars.accounts.nova.password }}"
 rabbit_userid: "{{ NOV.consumes_FND_RMQ.vars.accounts.nova.username }}"
 rabbit_use_ssl: "{{ NOV.consumes_FND_RMQ.members.private[0].use_tls }}"
 rabbit_hosts_transport_url: >
+  rabbit://
   {%- for x in NOV_API.consumes_FND_RMQ.members.private -%}
     {{ rabbit_userid }}:{{ rabbit_password }}@{{ x.host }}:{{ x.port }}{%- if not loop.last -%},{%- endif -%}
   {%- endfor -%}
+  /
+cell0_rabbit_hosts_transport_url: "none:///"
 
 ### SRIOV and PCI-PT
 pci_passthrough_whitelist: ''
@@ -122,6 +125,7 @@ nova_api_db_ssl: "{% if NOV_API.consumes_FND_MDB.vips.private[0].use_tls %}?ssl_
 
 ## [database]
 database_connection: "mysql+pymysql://{{ NOV.consumes_FND_MDB.vars.accounts.nova.username }}:{{ NOV.consumes_FND_MDB.vars.accounts.nova.password | urlencode }}@{{ NOV.consumes_FND_MDB.vips.private[0].host }}/nova{{ nova_db_ssl }}"
+cell0_database_connection: "mysql+pymysql://{{ NOV.consumes_FND_MDB.vars.accounts.nova.username }}:{{ NOV.consumes_FND_MDB.vars.accounts.nova.password | urlencode }}@{{ NOV.consumes_FND_MDB.vips.private[0].host }}/nova_cell0{{ nova_db_ssl }}"
 
 ## [api_database]
 nova_api_database_connection: "mysql+pymysql://{{ NOV_API.consumes_FND_MDB.vars.accounts.nova_api.username }}:{{ NOV_API.consumes_FND_MDB.vars.accounts.nova_api.password | urlencode }}@{{ NOV_API.consumes_FND_MDB.vips.private[0].host }}/nova_api{{ nova_api_db_ssl }}"
