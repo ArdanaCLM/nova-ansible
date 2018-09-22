@@ -27,8 +27,6 @@
   become: yes
   command: >
     {{ nova_api_bin_dir }}/nova-manage
-    --config-file {{ nova_api_conf_dir }}/nova.conf
-    --config-file {{ nova_api_conf_dir }}/api.conf
     {%- if _cell_mapping_uuid_result.stdout == '' %}
     {%-   if cell_mapping_name == 'cell0' %}
             cell_v2 map_cell0
@@ -37,6 +35,15 @@
     {%-   endif %}
     {%- else %}
         cell_v2 update_cell --cell_uuid {{ _cell_mapping_uuid_result.stdout }}
+    {%- endif %}
+    {%- if cell_mapping_name == 'cell0' %}
+        --database_connection "{{ cell0_database_connection }}"
+    {%-   if _cell_mapping_uuid_result.stdout != '' %}
+            --transport-url "{{ cell0_rabbit_hosts_transport_url }}"
+    {%-   endif %}
+    {%- else %}
+        --database_connection "{{ database_connection }}"
+        --transport-url "{{ rabbit_hosts_transport_url }}"
     {%- endif %}
   run_once_per: verb_hosts.NOV_API
 
