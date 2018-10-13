@@ -8,10 +8,9 @@ require {
 	type logrotate_t;
 	type var_lib_t;
 	type virtlogd_t;
-	class process { transition };
 	class capability { dac_override dac_read_search };
-	class file { open append create getattr write };
-	class dir search;
+	class file { open append create getattr write unlink };
+	class dir { search write remove_name add_name};
 }
 
 
@@ -25,9 +24,14 @@ allow logrotate_t var_lib_t:file { create write };
 
 #!!!! This avc is allowed in the current policy
 allow virtlogd_t nova_var_lib_t:dir search;
+allow virtlogd_t nova_var_lib_t:dir write;
+allow virtlogd_t nova_var_lib_t:dir remove_name;
+allow virtlogd_t nova_var_lib_t:dir add_name;
+allow virtlogd_t nova_var_lib_t:file create;
 allow virtlogd_t nova_var_lib_t:file open;
 allow virtlogd_t nova_var_lib_t:file append;
 allow virtlogd_t nova_var_lib_t:file getattr;
+allow virtlogd_t nova_var_lib_t:file unlink;
 
 #!!!! This avc is allowed in the current policy
 allow virtlogd_t self:capability { dac_override dac_read_search };
