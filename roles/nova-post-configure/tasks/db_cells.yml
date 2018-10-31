@@ -15,6 +15,12 @@
 #
 # Nova Database
 ---
+
+# this step can be removed at a later date when we are absolutely
+# sure all customers have patched bsc#1091490 on their systems
+- name: nova-post-configure | db_cells | Remove duplicate cell1 mappings
+  include: _delete_cell1_duplicates.yml
+
 - name: nova-post-configure | db_cells | Create/update cell mapping cell0
   include: _update_cell_mapping.yml
   vars:

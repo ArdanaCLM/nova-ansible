@@ -1,0 +1,75 @@
+#
+# (c) Copyright 2018 SUSE LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License"); you may
+# not use this file except in compliance with the License. You may obtain
+# a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations
+# under the License.
+#
+
+# this file can be removed at a later date when we are absolutely
+# sure all customers have patched bsc#1091490 on their systems
+
+# kindly delete any duplicates
+- name: nova-post-configure | _delete_cell1_duplicates |
+    Query for cell1 mapping UUIDs
+  become: yes
+  shell: >
+    {{ nova_api_bin_dir }}/nova-manage
+    cell_v2 list_cells 2>/dev/null |
+    grep "^|  *cell1 " | awk '{ print $4 }'
+  register: _cell_mapping_uuid_result
+  run_once_per: verb_hosts.NOV_API
+
+- name: nova-post-configure | _delete_cell1_duplicates |
+    Delete all unused cell1 mappings
+  become: yes
+  command: >
+    {{ nova_api_bin_dir }}/nova-manage
+    cell_v2 delete_cell --cell_uuid {{ item }}
+  with_items: "{{ _cell_mapping_uuid_result.stdout_lines }}"
+  run_once_per: verb_hosts.NOV_API
+  ignore_errors: yes
+  when: _cell_mapping_uuid_result.stdout_lines | length > 1
+
+# forcefully delete remaining duplicates
+- name: nova-post-configure | _delete_cell1_duplicates |
+    Query for remaining cell1 mapping UUIDs
+  become: yes
+  shell: >
+    {{ nova_api_bin_dir }}/nova-manage
+    cell_v2 list_cells 2>/dev/null |
+    grep "^|  *cell1 " | awk '{ print $4 }'
+  register: _cell_mapping_uuid_result
+
+- name: nova-post-configure | _delete_cell1_duplicates |
+    Ensure all remaining cell1 mappings are valid
+  become: yes
+  command: >
+    {{ nova_api_bin_dir }}/nova-manage
+    cell_v2 update_cell --cell_uuid {{ item }}
+    --database_connection "{{ database_connection }}"
+    --transport-url "{{ rabbit_hosts_transport_url }}"
+  with_items: "{{ _cell_mapping_uuid_result.stdout_lines }}"
+  no_log: True
+
+- name: nova-post-configure | _delete_cell1_duplicates | Force delete duplicates
+  become: yes
+  command: >
+    {{ nova_api_bin_dir }}/nova-manage
+    cell_v2 delete_cell --force --cell_uuid {{ item }}
+  with_items: "{{ _cell_mapping_uuid_result.stdout_lines[1:] }}"
+  run_once_per: verb_hosts.NOV_API
+  when: _cell_mapping_uuid_result.stdout_lines | length > 1
+
+# recreate all forcefully deleted host to cell mappings
+- name: nova-post-configure | _delete_cell1_duplicates |
+    Recreate all forcefully deleted host to cell mappings
+  include: discover_hosts_post_deploy.yml
