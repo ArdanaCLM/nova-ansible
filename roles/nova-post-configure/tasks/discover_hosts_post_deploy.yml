@@ -33,6 +33,7 @@
     --config-dir {{ nova_api_conf_dir }}
     cell_v2 list_cells | grep cell1
   become: yes
+  ignore_errors: yes
   register: cell1_result
 
 - name: nova-post-configure | discover_hosts_post_deploy |
@@ -42,3 +43,4 @@
     --config-dir {{ nova_api_conf_dir }}
     cell_v2 map_instances --cell_uuid {{ cell1_result['stdout'].split()[3] }}
   become: yes
+  when: cell1_result | success
