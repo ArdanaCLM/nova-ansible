@@ -45,6 +45,7 @@
         --database_connection "{{ database_connection }}"
         --transport-url "{{ rabbit_hosts_transport_url }}"
     {%- endif %}
+  no_log: True
   run_once_per: verb_hosts.NOV_API
 
 - name: nova-post-configure | _update_cell_mapping | Restart nova-api service
