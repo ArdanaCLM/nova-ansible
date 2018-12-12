@@ -38,9 +38,11 @@ snapshot_image_format = qcow2
 volume_use_multipath = False
 # SES Integration
 {% if nova_ses_enabled|bool %}
+{% if ses_nova_set_images_type is defined and ses_nova_set_images_type|bool %}
 images_type = rbd
 images_rbd_pool = {{ nova_ses_pool_name }}
 images_rbd_ceph_conf = {{ nova_ses_ceph_conf_file_path }}
+{% endif %}
 rbd_user = {{ nova_ses_user_name }}
 rbd_secret_uuid = {{ nova_ses_secret_uuid }}
 {% endif %}
