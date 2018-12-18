@@ -23,7 +23,6 @@
   package:
     name: python-novaclient
     state: present
-  when: deployer_media_legacy_layout|bool == False
 
 - name: nova-monasca | _monitor_libvirt |
     Run Monasca agent libvirt detection plugin
