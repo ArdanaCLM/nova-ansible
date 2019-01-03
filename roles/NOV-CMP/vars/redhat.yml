@@ -22,6 +22,7 @@ nova_required_packages:
   - libxslt
   - genisoimage
   - python-libguestfs
+  - libsodium23
 
 # packages listed here will trigger a restart of the service when updated
 nova_compute_restart_packages: []
