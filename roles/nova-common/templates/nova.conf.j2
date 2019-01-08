@@ -106,6 +106,7 @@ cafile = {{ ca_certs_file }}
 [placement]
 auth_type = password
 auth_url = {{ keystone_auth_uri }}/v3
+www_authenticate_uri = {{ keystone_auth_uri }}/v3
 username = {{ nova_placement_api_user }}
 password = {{ nova_placement_api_password }}
 user_domain_name = Default
