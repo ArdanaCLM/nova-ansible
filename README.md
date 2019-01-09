@@ -35,7 +35,6 @@ This repo contains the following roles and role specific tasks:
 - NOV-CMP-IRN - Ironic hypervisor.
 - NOV-CMP-KVM - KVM hypervisor.
 - NOV-CND - Conductor service.
-- NOV-CAU - Consoleauth service.
 - nova-monasca - Monitoring
   - heartbeat_alarm - Install and configure a heartbeat check.
   - _monitor_libvirt - Run Monasca agent libvirt detection plugin.

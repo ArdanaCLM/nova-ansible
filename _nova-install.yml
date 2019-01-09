@@ -27,12 +27,6 @@
   tasks:
     - include: roles/NOV-API/tasks/install.yml
 
-- hosts: NOV-CAU
-  roles:
-    - NOV-CAU
-  tasks:
-    - include: roles/NOV-CAU/tasks/install.yml
-
 - hosts: NOV-SCH
   roles:
     - NOV-SCH

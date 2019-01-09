@@ -54,12 +54,6 @@
   tasks:
     - include: roles/nova-common/tasks/post-configure.yml
 
-- hosts: NOV-CAU
-  roles:
-    - NOV-CAU
-  tasks:
-    - include: roles/nova-common/tasks/post-configure.yml
-
 - hosts: NOV-VNC
   roles:
     - NOV-VNC

@@ -29,13 +29,6 @@
   tasks:
     - include: roles/NOV-API/tasks/status.yml
 
-- hosts: NOV-CAU
-  max_fail_percentage: 0
-  roles:
-    - NOV-CAU
-  tasks:
-    - include: roles/NOV-CAU/tasks/status.yml
-
 - hosts: NOV-SCH
   max_fail_percentage: 0
   roles:

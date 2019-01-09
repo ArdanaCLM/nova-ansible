@@ -33,12 +33,6 @@
   tasks:
     - include: roles/NOV-VNC/tasks/stop.yml
 
-- hosts: NOV-CAU
-  roles:
-    - NOV-CAU
-  tasks:
-    - include: roles/NOV-CAU/tasks/stop.yml
-
 - hosts: NOV-SCH
   roles:
     - NOV-SCH

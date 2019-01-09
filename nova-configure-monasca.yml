@@ -27,7 +27,7 @@
 
 # we create a new alarm definition for monitoring processes bounds for nova-api.
 # The definition of a new alarm needs to be done just once per region.
-- hosts: NOV-API:NOV-CAU:NOV-CMP:NOV-CND:NOV-SCH:NOV-VNC:&MON-AGN
+- hosts: NOV-API:NOV-CMP:NOV-CND:NOV-SCH:NOV-VNC:&MON-AGN
   roles:
     - role: nova-monasca
   tasks:

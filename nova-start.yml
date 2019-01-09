@@ -27,12 +27,6 @@
   tasks:
     - include: roles/NOV-SCH/tasks/start.yml
 
-- hosts: NOV-CAU
-  roles:
-    - NOV-CAU
-  tasks:
-    - include: roles/NOV-CAU/tasks/start.yml
-
 - hosts: NOV-VNC
   roles:
     - NOV-VNC
@@ -51,7 +45,7 @@
   tasks:
     - include: roles/NOV-CMP/tasks/start.yml
 
-- hosts: NOV-API:NOV-CAU:NOV-CMP:NOV-CND:NOV-SCH:NOV-VNC
+- hosts: NOV-API:NOV-CMP:NOV-CND:NOV-SCH:NOV-VNC
   tasks:
     - include: roles/nova-common/tasks/_clear_persistent_facts.yml
       when: ardana_notify_nova_restart_required is defined and
@@ -66,7 +60,7 @@
 # When everything is started we start to monitor.
 # The list of hosts is created by the intersection of hosts with the monasca
 # agent and the hosts running Nova services.
-- hosts: NOV-API:NOV-CAU:NOV-CMP:NOV-CND:NOV-SCH:NOV-VNC:&MON-AGN
+- hosts: NOV-API:NOV-CMP:NOV-CND:NOV-SCH:NOV-VNC:&MON-AGN
   roles:
     - nova-monasca
   tasks:

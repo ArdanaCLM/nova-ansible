@@ -27,12 +27,6 @@
   tasks:
     - include: roles/NOV-API/tasks/check_upgraded_packages.yml
 
-- hosts: NOV-CAU
-  roles:
-    - NOV-CAU
-  tasks:
-    - include: roles/NOV-CAU/tasks/check_upgraded_packages.yml
-
 - hosts: NOV-SCH
   roles:
     - NOV-SCH
