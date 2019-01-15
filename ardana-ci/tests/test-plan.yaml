@@ -63,13 +63,6 @@
     - ansible-playbook -i hosts/verb_hosts nova-start.yml
     - ansible-playbook -i hosts/verb_hosts nova-status.yml
 
-- name: ardana-ci | test-plan | Test move consoleauth
-  logfile: nova-move-consoleauth.log
-  prefix: move-cau
-  exec:
-    - ansible-playbook -i hosts/verb_hosts nova-start.yml --extra-vars "consoleauth_host_index=1"
-    - ansible-playbook -i hosts/verb_hosts nova-status.yml
-
 - name: ardana-ci | test-plan | Test nova-cloud-configure
   logfile: nova-cloud-configure.log
   prefix: cloud-configure

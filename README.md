@@ -28,7 +28,6 @@ This repo contains the following roles and role specific tasks:
   - _configure_rootwrap - Configure rootwrap for service.
   - _service_status - Check and report status of service.
   - _set_directories - Set directories (etc, bin, conf) for service.
-  - _singleton_service_status - Check and report status of a singleton service.
   - _write_conf - Create a file, maintaining backup copies.
 - NOV-CMP - Compute service which requires one of the hypervisors.
 - NOV-CMP-ESX - ESX hypervisor.
