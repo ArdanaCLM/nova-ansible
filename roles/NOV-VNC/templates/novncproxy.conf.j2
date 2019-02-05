@@ -24,9 +24,11 @@
 log_config_append = "{{ nova_service_conf_dir }}/novncproxy-logging.conf"
 
 # VNC
+vncserver_listen = {{ vncserver_listen }}
+
+[vnc]
 novncproxy_host = {{ novncproxy_host }}
 novncproxy_port = {{ novncproxy_port }}
-vncserver_listen = {{ vncserver_listen }}
 
 [database]
 backend = sqlalchemy
