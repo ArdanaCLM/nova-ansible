@@ -1,0 +1,53 @@
+#
+# (c) Copyright 2019 SUSE LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License"); you may
+# not use this file except in compliance with the License. You may obtain
+# a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations
+# under the License.
+#
+---
+# Evacuate instances when compute host is down
+# variables target_comp_host and failed_comp_host are passed in as part of extra-vars
+- name: NOV-CLI | nova-host-evacuate | evacuate all the instances from the failed compute host
+  run_once: True
+  shell: |
+    source /var/lib/ardana/service.osrc
+    nova host-evacuate  --target_host {{target_comp_host}} {{failed_comp_host}}
+  register: nova_host_evacuate_result
+  ignore_errors: true
+
+# Failed to evacuate instances when compute host is down
+- name: NOV-CLI | nova-host-evacuate | failed to evacuate all the instances from the failed compute host
+  fail:
+    msg: "Failed to evacuate instances for {{failed_comp_host}}"
+  when: nova_host_evacuate_result | failed
+
+# Check the instances of the failed compute host
+- name: NOV-CLI | nova-host-evacuate | check the instances of the failed compute host
+  shell: |
+    source /var/lib/ardana/service.osrc
+    openstack server list  --all-projects --host {{failed_comp_host}}
+  register: nova_host_instances_result
+  when: (nova_host_evacuate_result | success) and
+        (nova_host_evacuate_result.stdout_lines | length > 4)  #lines including header and footer
+
+# Wait and check the instances of the failed compute host are evacuated
+- name: NOV-CLI | nova-host-evacuate | wait for all the instances of the failed compute host are evacuated
+  shell: |
+    source /var/lib/ardana/service.osrc
+    openstack server list  --all-projects --host {{failed_comp_host}}
+  register: nova_host_instances_result
+  until: nova_host_instances_result.stdout.split("\n") | length <= 4  #lines including header and footer
+  retries: 60
+  delay: 60  # seconds
+
+
+
