@@ -34,6 +34,12 @@ inject_partition = 1
 live_migration_bandwidth = 1000
 live_migration_flag = VIR_MIGRATE_LIVE,VIR_MIGRATE_PEER2PEER
 live_migration_progress_timeout = 300
+{% if nova_cpu_mode is defined %}
+cpu_mode = {{ nova_cpu_mode }}
+{%   if nova_cpu_mode == 'custom' %}
+cpu_model = {{ nova_cpu_model }}
+{%   endif %}
+{% endif %}
 snapshots_directory = {{ libvirt_snapshots_directory }}
 snapshot_image_format = qcow2
 volume_use_multipath = False
