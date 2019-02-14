@@ -199,7 +199,6 @@ until_refresh = 1
 [filter_scheduler]
 ram_weight_multiplier = -1.0
 host_subset_size = 5
-weight_classes = nova.scheduler.weights.ram.RAMWeigher
 available_filters = nova.scheduler.filters.all_filters
 enabled_filters = AvailabilityZoneFilter,RetryFilter,ComputeFilter,DiskFilter,RamFilter,ImagePropertiesFilter,ServerGroupAffinityFilter,ServerGroupAntiAffinityFilter,ComputeCapabilitiesFilter,NUMATopologyFilter,PciPassthroughFilter,SameHostFilter,DifferentHostFilter
 
