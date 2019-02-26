@@ -37,6 +37,7 @@ level: NOTSET
 class: handlers.WatchedFileHandler
 args: ('{{ log_dir  }}/nova-scheduler.log',)
 formatter: context
+level: INFO
 
 # Writes JSON to disk, beaver will ship to logstash
 [handler_logstash]

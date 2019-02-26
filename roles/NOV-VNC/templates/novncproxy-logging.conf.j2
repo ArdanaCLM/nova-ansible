@@ -38,6 +38,7 @@ class: handlers.WatchedFileHandler
 # TODO Use templated log path
 args: ('{{ log_dir }}/nova-novncproxy.log',)
 formatter: context
+level: INFO
 
 # Writes JSON to disk, beaver will ship to logstash
 [handler_logstash]
