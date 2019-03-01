@@ -44,8 +44,8 @@ vmwareapi_nic_attach_retry_count = 60
 # VNC
 [vnc]
 novncproxy_base_url = {{ novncproxy_base_url }}
-vncserver_listen = 0.0.0.0
-vncserver_proxyclient_address = {{ vncserver_proxyclient_address }}
+server_listen = 0.0.0.0
+server_proxyclient_address = {{ vncserver_proxyclient_address }}
 enabled = True
 
 {% if neutron_ovs_bridge != ""  %}
