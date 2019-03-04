@@ -19,6 +19,7 @@
 # packages listed here will be installed by nova-common | install
 nova_required_packages:
   - bridge-utils
+  - dosfstools
   - libxslt
   - genisoimage
   - python-libguestfs
