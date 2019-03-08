@@ -26,6 +26,7 @@ nova_required_packages:
   - kvm
   - libvirt
   - libsodium23
+  - python-libvirt-python  # SLES maintained - not included in venv
 
 # packages listed here will trigger a restart of the service when updated
 nova_compute_restart_packages: []
