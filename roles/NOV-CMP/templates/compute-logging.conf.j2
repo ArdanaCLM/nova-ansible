@@ -46,6 +46,7 @@ level: INFO
 class: {{ nova_compute_log_handler_file_class }}
 args: ({{ nova_compute_log_handler_file_args }})
 formatter: context
+level: INFO
 
 # Writes JSON to disk, beaver will ship to logstash
 [handler_logstash]
