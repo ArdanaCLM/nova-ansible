@@ -56,8 +56,8 @@ rbd_secret_uuid = {{ nova_ses_secret_uuid }}
 # VNC
 [vnc]
 novncproxy_base_url = {{ novncproxy_base_url }}
-vncserver_listen = 0.0.0.0
-vncserver_proxyclient_address = {{ vncserver_proxyclient_address }}
+server_listen = 0.0.0.0
+server_proxyclient_address = {{ vncserver_proxyclient_address }}
 enabled = True
 
 {% if neutron_ovs_bridge != ""  %}

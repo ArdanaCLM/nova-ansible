@@ -90,7 +90,7 @@ driver = messaging
 topics = notifications
 
 [vnc]
-vncserver_proxyclient_address = {{ vncserver_proxyclient_address }}
+server_proxyclient_address = {{ vncserver_proxyclient_address }}
 
 [cinder]
 catalog_info = volumev3:cinderv3:internalURL
@@ -132,7 +132,7 @@ keys_path = {{ keys_path }}
 [keystone_authtoken]
 auth_type = v3password
 auth_url = {{ keystone_auth_uri }}/v3
-auth_uri = {{ keystone_auth_uri }}/v3
+www_authenticate_uri = {{ keystone_auth_uri }}/v3
 project_domain_name = Default
 project_name = {{ nova_admin_tenant_name }}
 user_domain_name = Default
@@ -160,7 +160,7 @@ metadata_proxy_shared_secret = {{ neutron_metadata_proxy_shared_secret }}
 neutron_auth_strategy = keystone
 cafile = {{ ca_certs_file }}
 service_metadata_proxy = True
-url = {{ neutron_url }}
+endpoint_override = {{ neutron_url }}
 timeout = 300
 region_name = {{ neutron_region_name }}
 default_floating_pool = {{ default_floating_pool }}
@@ -206,7 +206,7 @@ driver = log
 {% if barbican_endpoint_template  != "" %}
 #Barbican
 [key_manager]
-api_class = castellan.key_manager.barbican_key_manager.BarbicanKeyManager
+backend = barbican
 
 [barbican]
 barbican_endpoint = {{ barbican_endpoint_template }}
