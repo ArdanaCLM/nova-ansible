@@ -31,8 +31,10 @@
     name: "libvirt"
     args:
       username: "{{ nova_admin_user }}"
+      user_domain_name: Default
       password: "{{ nova_admin_password }}"
       project_name: "{{ keystone_service_tenant }}"
+      project_domain_name: Default
       auth_url: "{{ keystone_auth_url_unversioned }}"
       endpoint_type: "admin"
       disk_collection_period: "{{ monasca_libvirt_disk_collection_period }}"
