@@ -27,8 +27,8 @@
 - name: nova-common | _configure_rootwrap |
     Setup nova user to allow sudo to run nova-rootwrap without password
   become: yes
-  copy:
-    src: nova-rootwrap
+  template:
+    src: nova-rootwrap.j2
     dest: /etc/sudoers.d/nova-rootwrap
     owner: root
     group: root
