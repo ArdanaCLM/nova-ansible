@@ -29,6 +29,7 @@ nova_required_packages:
   - python-PrettyTable
   - python-netifaces
   - qemu-block-rbd
+  - qemu-ovmf-x86_64
   - rsync
 
 # packages listed here will trigger a restart of libvirt and the compute service
