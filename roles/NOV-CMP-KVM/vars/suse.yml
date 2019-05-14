@@ -30,6 +30,7 @@ nova_required_packages:
   - python-PrettyTable
   - python-netifaces
   - qemu-block-rbd
+  - qemu-ovmf-x86_64
   - rsync
   - libsodium23
 
