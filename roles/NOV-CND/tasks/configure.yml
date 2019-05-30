@@ -42,7 +42,7 @@
   template:
     src: "{{ item }}.j2"
     dest: "{{ nova_service_conf_dir }}/{{ item }}"
-    owner: "{{ nova_system_user }}"
+    owner: root
     group: "{{ nova_system_group }}"
     mode: 0640
   with_items:
