@@ -84,8 +84,8 @@
   become: yes
   file:
     path: "{{ nova_service_conf_dir }}"
-    owner: "{{ nova_system_user }}"
-    group: "{{ nova_system_group }}"
+    owner: root
+    group: root
     mode: 0755
     state: directory
 
