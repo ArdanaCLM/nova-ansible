@@ -23,7 +23,7 @@ nova_conductor_max_workers: 8
 
 # Number of workers for OpenStack Conductor service. The default will be the
 # maximum allowed by variable nova_conductor_max_workers
-nova_conductor_workers: "{{ [nova_conductor_max_workers, [2, ansible_processor_vcpus / 2] | max] | min }}"
+nova_conductor_workers: "{{ [nova_conductor_max_workers, [2, ansible_processor_vcpus / 2] | max] | min | int }}"
 
 
 # the log files nova-common will create for this service

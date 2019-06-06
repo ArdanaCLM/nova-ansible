@@ -50,9 +50,9 @@ nova_metadata_max_workers: 10
 
 # Number of workers for OpenStack API service. The default will be the
 # maximum allowed by variable nova_api_max_workers
-nova_api_workers: "{{ [nova_api_max_workers, [2, ansible_processor_vcpus / 2] | max] | min }}"
+nova_api_workers: "{{ [nova_api_max_workers, [2, ansible_processor_vcpus / 2] | max] | min | int }}"
 # Number of workers for metadata service.
-nova_metadata_workers: "{{ [nova_metadata_max_workers, [2, ansible_processor_vcpus / 2] | max] | min }}"
+nova_metadata_workers: "{{ [nova_metadata_max_workers, [2, ansible_processor_vcpus / 2] | max] | min | int }}"
 
 # nova.conf
 ## [DEFAULT]
