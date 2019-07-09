@@ -23,7 +23,7 @@
 
 - name: nova-common | _service_status | Check systemd service running
   become: yes
-  command: systemctl status "{{ nova_component }}"
+  command: systemctl -n 0 status "{{ nova_component }}"
   ignore_errors: yes
   changed_when: false
   register: systemctl_status_result
