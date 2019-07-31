@@ -1,6 +1,5 @@
 #
-# (c) Copyright 2015-2016 Hewlett Packard Enterprise Development LP
-# (c) Copyright 2017 SUSE LLC
+# (c) Copyright 2019 SUSE LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may
 # not use this file except in compliance with the License. You may obtain
@@ -14,14 +13,14 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 #
-# tasks against the nova database that will add new columns, tables
-# and/or remove redundant data prior to upgrade
+# Nova API Database sync
 ---
-- name: nova-post-configure | db_expand | Need to run db api sync before expand
-  include: db_api_sync.yml
-
-- name: nova-post-configure | db_expand | Prepare cell0 and cell1 during upgrade
-  include: db_cells.yml
-
-- name: nova-post-configure | db_expand | DB Expand
-  include: db_configure.yml
+# This task always reports changed
+- name: nova-post-configure | db_api_sync | Run nova-manage api db sync
+  become: yes
+  command: >
+    {{ nova_api_bin_dir }}/nova-manage
+    --config-file {{ nova_api_conf_dir }}/nova.conf
+    --config-file {{ nova_api_conf_dir }}/api.conf
+    api_db sync
+  run_once_per: verb_hosts.NOV_API
