@@ -107,6 +107,7 @@ rabbit_hosts_transport_url: >
   {%- endfor -%}
   /
 cell0_rabbit_hosts_transport_url: "none:///"
+nova_rpc_response_timeout: 60
 
 ### SRIOV and PCI-PT
 pci_passthrough_whitelist: ''
