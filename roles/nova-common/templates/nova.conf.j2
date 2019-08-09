@@ -79,6 +79,9 @@ volume_usage_poll_interval = 3600
 # transport_url
 transport_url = {{ rabbit_hosts_transport_url }}
 
+# Seconds to wait for a response from a call (rabbit message)
+rpc_response_timeout = {{ nova_rpc_response_timeout }}
+
 # End of [DEFAULT] section
 
 [oslo_messaging_notifications]
