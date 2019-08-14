@@ -42,7 +42,7 @@ monasca_alarm_definition_api_url: >
 nova_api_url: >-
     {% if  (host | item('bind.NOV_API.internal.ip_address') is defined)
        and (host | item('bind.NOV_API.internal.port') is defined)
-    %}http://{{ host.bind.NOV_API.internal.ip_address
+    %}http://{{ host.bind.NOV_API.internal.ip_address | ipwrap
     }}:{{ host.bind.NOV_API.internal.port
     }}/v2.0{% endif %}
 nova_vnc_url: >-
