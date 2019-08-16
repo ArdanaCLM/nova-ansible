@@ -48,6 +48,8 @@ volume_use_multipath = False
 images_type = rbd
 images_rbd_pool = {{ nova_ses_pool_name }}
 images_rbd_ceph_conf = {{ nova_ses_ceph_conf_file_path }}
+disk_cachemodes = network=writeback
+hw_disk_discard = unmap
 {% endif %}
 rbd_user = {{ nova_ses_user_name }}
 rbd_secret_uuid = {{ nova_ses_secret_uuid }}
