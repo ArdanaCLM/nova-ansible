@@ -25,6 +25,7 @@ nova_required_packages:
   - genisoimage
   - kpartx
   - kvm
+  - typelib-1_0-Libosinfo-1_0
   - libvirt
   - python-PrettyTable
   - python-netifaces
