@@ -27,6 +27,7 @@ log_config_append = "{{ nova_service_conf_dir }}/novncproxy-logging.conf"
 vncserver_listen = {{ vncserver_listen }}
 
 [vnc]
+auth_schemes = vencrypt,none
 novncproxy_host = {{ novncproxy_host }}
 novncproxy_port = {{ novncproxy_port }}
 

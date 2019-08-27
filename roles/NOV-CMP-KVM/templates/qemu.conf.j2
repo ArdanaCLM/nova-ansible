@@ -48,7 +48,11 @@
 # It is necessary to setup CA and issue a server certificate
 # before enabling this.
 #
-#vnc_tls = 1
+{% if NOV.consumes_FND_MDB.vips.private[0].use_tls %}
+vnc_tls = 1
+{% else %}
+# vnc_tls = 1
+{% endif %}
 
 
 # Use of TLS requires that x509 certificates be issued. The
