@@ -16,15 +16,8 @@
 #
 # Nova Database
 ---
-# This task always reports changed
 - name: nova-post-configure | db_configure | Run nova-manage api db sync
-  become: yes
-  command: >
-    {{ nova_api_bin_dir }}/nova-manage
-    --config-file {{ nova_api_conf_dir }}/nova.conf
-    --config-file {{ nova_api_conf_dir }}/api.conf
-    api_db sync
-  run_once_per: verb_hosts.NOV_API
+  include: db_api_sync.yml
 
 - name: nova-post-configure | db_configure |
     Prepare cell0 and cell1 during normal deployment
