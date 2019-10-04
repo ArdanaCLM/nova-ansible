@@ -111,6 +111,8 @@ nova_rpc_response_timeout: 60
 
 ### SRIOV and PCI-PT
 pci_passthrough_whitelist: ''
+pci_passthrough_alias: ''
+gpu_pci_pt_interface: []
 
 ### VNC
 novncproxy_host: "{{ host.bind.NOV_VNC.public.ip_address }}"

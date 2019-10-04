@@ -20,6 +20,24 @@
   vars:
     install_package_result: "{{ ardana_notify_nova_api_install_result }}"
 
+- name: NOV-API | configure | gather pass through info if any
+  set_fact:
+    pass_through_data: >
+       {{ item.pass_through.gpu }}
+  with_items: control_plane_servers
+  when: item.pass_through | length > 0 and
+        item.pass_through.gpu is defined
+  register: pass_through_data_result
+
+- name: nova-common | configure | set up gpu pt info if any
+  set_fact:
+    gpu_pci_pt_interface: >
+      {{ pass_through_data_result.results |
+           selectattr('ansible_facts','defined') |
+           map(attribute='ansible_facts.pass_through_data') |
+           list | sum(start=[]) }}
+  when: pass_through_data_result | length > 0
+
 - name: NOV-API | configure | nova-common configure
   include: ../../nova-common/tasks/configure.yml
 

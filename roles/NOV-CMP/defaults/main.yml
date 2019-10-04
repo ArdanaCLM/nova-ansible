@@ -46,3 +46,6 @@ vncserver_proxyclient_address: "{{ host.bind.NOV_CMP.vncdisplay.ip_address }}"
 nova_log_files:
   - "{{ log_dir }}/nova-compute.log"
   - "{{ log_dir }}/nova-compute-json.log"
+
+# gpu passthrough (list of dict)
+gpu_pci_pt_interface: "{{ host.pass_through.gpu | default([]) }}"

@@ -44,6 +44,22 @@
 - include: _create_pci_whitelist.yml
   when: network_device_types is defined
 
+- include: _create_pci_whitelist_gpu.yml
+  when:
+    - gpu_pci_pt_interface is defined
+    - (gpu_pci_pt_interface | default([])) | length > 0
+    - (inventory_hostname in groups['NOV-CMP'])
+
+- name: nova-common | configure | Combine pci_passthrough_whitelist
+  set_fact:
+    pci_passthrough_whitelist: >-
+      {{ ((('[' ~ (pci_whitelist_result.stdout | default('')) ~ ']') | from_json) + (gpu_pci_passthrough_whitelist | default([]))) }}
+
+- include: _create_pci_alias.yml
+  when:
+    - gpu_pci_pt_interface is defined
+    - (gpu_pci_pt_interface | default([])) | length > 0
+
 - include: _write_conf.yml
   src: "nova.conf.j2"
   dest: "{{ nova_service_conf_dir }}/nova.conf"

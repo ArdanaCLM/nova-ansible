@@ -185,7 +185,12 @@ kombu_reconnect_delay = 5.0
 
 [pci]
 # SRIOV and PCI-PT
-passthrough_whitelist = [{{ pci_passthrough_whitelist }}]
+passthrough_whitelist = {{ pci_passthrough_whitelist | to_json }}
+{% if pci_passthrough_alias is defined and pci_passthrough_alias | length > 0 %}
+{% for alias in pci_passthrough_alias  %}
+alias = {{ alias | to_json }}
+{% endfor %}
+{% endif %}
 
 [quota]
 quota_cores = -1
