@@ -45,8 +45,8 @@ def pci_passthrough_filter_alias(collection):
           product_id=x['product_id'],
           device_type=x['pf_mode'],
           name=x['name']))
-
-     return pcilist
+     uniq_pcilist=list({(v['vendor_id'],v['product_id'],v['device_type'],v['name']):v for v in pcilist}.values())
+     return uniq_pcilist
 
 class FilterModule(object):
     '''
