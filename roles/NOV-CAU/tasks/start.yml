@@ -77,6 +77,20 @@
     ({{ consoleauth_host_index }} ==
     {{ consoleauth_host_group.index(inventory_hostname) }})
 
+
+- name: NOV-CAU | start | Remove nova-consoleauth monasca process check from inactive nodes
+  become: yes
+  monasca_agent_plugin:
+    name: "nova"
+    state: "absent"
+    args:
+      service_api_url: "{{ nova_api_url }}"
+      component_name: "nova-consoleauth"
+  when: (nova_api_url | length) > 0 and
+        ({{ consoleauth_host_index }} !=
+        {{ consoleauth_host_group.index(inventory_hostname) }})
+
+
 - name: NOV-CAU | start | Stop consoleauth where not needed
   become: yes
   service:

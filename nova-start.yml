@@ -29,6 +29,7 @@
 
 - hosts: NOV-CAU
   roles:
+    - nova-monasca
     - NOV-CAU
   tasks:
     - include: roles/NOV-CAU/tasks/start.yml
