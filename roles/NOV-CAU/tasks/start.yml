@@ -86,9 +86,10 @@
     args:
       service_api_url: "{{ nova_api_url }}"
       component_name: "nova-consoleauth"
-  when: (nova_api_url | length) > 0 and
-        ({{ consoleauth_host_index }} !=
-        {{ consoleauth_host_group.index(inventory_hostname) }})
+  when:
+    ({{ consoleauth_host_index }} !=
+    {{ consoleauth_host_group.index(inventory_hostname) }})
+  ignore_errors: True
 
 
 - name: NOV-CAU | start | Stop consoleauth where not needed
